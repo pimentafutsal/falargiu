@@ -39,6 +39,10 @@
   .recbtn{display:inline-flex;align-items:center;gap:7px;margin:16px 0 4px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 14px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink);transition:.15s}
   .recbtn:hover{border-color:var(--teal);background:var(--teal-soft)}
   .recbtn b{background:var(--teal);color:#fff;border-radius:20px;padding:1px 8px;font-size:12px}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+  .btnrow .recbtn{margin:0}
+  .newconv{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:8px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--terra-deep)}
+  .newconv:hover{border-color:var(--terra);background:var(--terra-soft)}
 
   .hero{margin:14px 0 4px}
   .hero h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:0 0 4px;letter-spacing:-.3px}
@@ -173,7 +177,10 @@
   <!-- HOME -->
   <div id="home" class="screen active">
     <div class="namebox"><span>Seu nome:</span><input id="learnerName" placeholder="opcional" maxlength="20"></div>
-    <button class="recbtn" id="openArchive">🎙️ Minhas gravações <b id="recCount">0</b></button>
+    <div class="btnrow">
+      <button class="recbtn" id="openArchive">🎙️ Minhas gravações <b id="recCount">0</b></button>
+      <button class="recbtn" id="openHistory">📖 Histórico <b id="convCount">0</b></button>
+    </div>
     <div class="hero"><h1>Escolha uma cena para conversar</h1><p>Cada cena é um desafio real. Fale ou escreva — o parceiro responde de verdade.</p></div>
     <div id="cats"></div>
     <div class="note">💡 Para falar, o navegador pede permissão do microfone — toque em <b>Permitir</b>. Suas gravações ficam salvas na nuvem e aparecem em qualquer aparelho. Funciona melhor no Chrome.</div>
@@ -184,6 +191,7 @@
     <div class="topbar">
       <button class="back" id="backBtn" aria-label="Voltar">←</button>
       <div class="meta"><h2 id="sTitle"></h2><span id="sWith"></span></div>
+      <button class="newconv" id="newConvBtn" title="Começar uma conversa nova">✚ Nova</button>
     </div>
     <div class="goals"><div class="gh">🎯 Sua missão</div><div id="goalList"></div></div>
     <div class="chat" id="chat"></div>
@@ -204,6 +212,20 @@
     <div class="topbar"><button class="back" id="backBtn2" aria-label="Voltar">←</button><div class="meta"><h2>Minhas gravações</h2><span>sincronizadas na sua conta</span></div></div>
     <div id="recList"></div>
     <div class="footer">Seus áudios ficam salvos na nuvem 💾</div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div id="history" class="screen">
+    <div class="topbar"><button class="back" id="backBtn3" aria-label="Voltar">←</button><div class="meta"><h2>Histórico</h2><span>suas conversas guardadas</span></div></div>
+    <div id="histList"></div>
+    <div class="footer">Releia suas conversas para estudar 📖</div>
+  </div>
+
+  <!-- LEITURA DE CONVERSA -->
+  <div id="convview" class="screen">
+    <div class="topbar"><button class="back" id="backBtn4" aria-label="Voltar">←</button><div class="meta"><h2 id="cvTitle"></h2><span id="cvDate"></span></div></div>
+    <div class="chat" id="cvChat"></div>
+    <div class="footer">Conversa guardada (somente leitura) 📖</div>
   </div>
 </div>
 
@@ -403,10 +425,12 @@ const SCENES=[
 
 
 /* ===== Estado ===== */
-let current=null, turn=0, ttsOn=true, busy=false, pendingAudio=null, apiHistory=[];
-const screens={home:$("#home"),scene:$("#scene"),archive:$("#archive")};
+let current=null, ttsOn=true, busy=false, pendingAudio=null;
+let convId=null, convMessages=[], convStartedAt=0; // conversa atual: [{who:'partner'|'user', text, pt}]
+const screens={home:$("#home"),scene:$("#scene"),archive:$("#archive"),history:$("#history"),convview:$("#convview")};
 function show(name){Object.values(screens).forEach(s=>s.classList.remove("active"));screens[name].classList.add("active");window.scrollTo(0,0);}
 function nameVal(){return $("#learnerName").value.trim();}
+function genId(){return Date.now()+"-"+Math.random().toString(36).slice(2,7);}
 
 /* ===== Auth ===== */
 if(CONFIGURED){
@@ -452,20 +476,66 @@ function renderHome(){
     root.appendChild(sec);
   });
 }
-async function refreshCount(){ if(!CONFIGURED||!uid){$("#recCount").textContent="0";return;} try{const snap=await get(ref(rtdb,`users/${uid}/recordings`));const v=snap.val()||{};$("#recCount").textContent=Object.keys(v).length;}catch(e){} }
+async function refreshCount(){
+  if(!CONFIGURED||!uid){$("#recCount").textContent="0";$("#convCount").textContent="0";return;}
+  try{const snap=await get(ref(rtdb,`users/${uid}/recordings`));$("#recCount").textContent=Object.keys(snap.val()||{}).length;}catch(e){}
+  try{const snap=await get(ref(rtdb,`users/${uid}/conversations`));$("#convCount").textContent=Object.keys(snap.val()||{}).length;}catch(e){}
+}
 
 /* ===== Abrir cena ===== */
-function openScene(s){
-  current=s; turn=0; pendingAudio=null; apiHistory=[];
+async function openScene(s){
+  current=s; pendingAudio=null;
   $("#sTitle").textContent=s.title; $("#sWith").textContent=s.with; $("#chat").innerHTML="";
   const gl=$("#goalList"); gl.innerHTML="";
   s.goals.forEach((g,i)=>{const d=document.createElement("div");d.className="goal";d.dataset.i=i;d.innerHTML=`<span class="chk">✓</span><span>${g}</span>`;gl.appendChild(d);});
   const ch=$("#chips"); ch.innerHTML="";
   s.chips.forEach(([en,pt])=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`${en}<small>${pt}</small>`;b.onclick=()=>{const t=$("#input");t.value=(t.value?t.value+" ":"")+en;t.focus();autoGrow();};ch.appendChild(b);});
-  addPartner(s.flow[0][0], s.flow[0][1], "");
-  speak(s.flow[0][0]); show("scene");
+  show("scene");
+  await loadOrResume(s);
 }
 $("#backBtn").onclick=()=>{stopRec();window.speechSynthesis&&speechSynthesis.cancel();renderHome();show("home");};
+$("#newConvBtn").onclick=()=>{ window.speechSynthesis&&speechSynthesis.cancel(); newConversation(current); };
+
+/* ===== Conversas (retomar / nova / salvar) ===== */
+async function loadOrResume(s){
+  let resumed=false;
+  if(CONFIGURED&&uid){
+    try{
+      const ptr=await get(ref(rtdb,`users/${uid}/activeConv/${s.id}`));
+      const id=ptr.val();
+      if(id){
+        const cs=await get(ref(rtdb,`users/${uid}/conversations/${id}`));
+        const c=cs.val();
+        if(c&&Array.isArray(c.messages)&&c.messages.length){
+          convId=id; convMessages=c.messages.slice(); convStartedAt=c.startedAt||Date.now();
+          convMessages.forEach(m=> m.who==="user"?addUser(m.text,null):addPartner(m.text,m.pt,""));
+          (c.goalsDone||[]).forEach(i=>markGoal(i));
+          resumed=true;
+        }
+      }
+    }catch(e){}
+  }
+  if(!resumed) newConversation(s, true);
+}
+function newConversation(s, silentIfFresh){
+  convId=genId(); convStartedAt=Date.now(); convMessages=[{who:"partner",text:s.flow[0][0],pt:s.flow[0][1]}];
+  $("#chat").innerHTML="";
+  document.querySelectorAll(".goal.done").forEach(el=>el.classList.remove("done"));
+  addPartner(s.flow[0][0], s.flow[0][1], "");
+  speak(s.flow[0][0]);
+  // a conversa só é gravada (e vira a "ativa") quando a aluna escrever a primeira mensagem
+}
+let saveTimer=null;
+function saveConv(goalsDone){
+  if(!CONFIGURED||!uid||!convId) return;
+  const data={sceneId:current.id,sceneTitle:current.title,with:current.with,startedAt:convStartedAt||Date.now(),updatedAt:Date.now(),messages:convMessages,goalsDone:goalsDone||currentGoalsDone()};
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    set(ref(rtdb,`users/${uid}/conversations/${convId}`),data).catch(()=>{});
+    set(ref(rtdb,`users/${uid}/activeConv/${current.id}`),convId).catch(()=>{});
+  },300);
+}
+function currentGoalsDone(){return [...document.querySelectorAll(".goal.done")].map(el=>+el.dataset.i);}
 
 /* ===== Mensagens ===== */
 function addPartner(text,pt,tip){
@@ -499,24 +569,26 @@ async function send(){
   const t=$("#input"); const text=t.value.trim(); if(!text||busy)return;
   busy=true; $("#sendBtn").disabled=true;
   await finalizeRec(); const audio=pendingAudio; pendingAudio=null;
-  addUser(text,audio); apiHistory.push({role:"user",content:text});
+  addUser(text,audio); convMessages.push({who:"user",text}); saveConv();
   if(audio) saveRecording(text,audio);
   t.value=""; autoGrow(); showTyping();
   try{
     const j = CONFIGURED ? await askAI() : fallbackTurn();
     hideTyping();
     addPartner(j.reply, j.pt, j.tip);
-    apiHistory.push({role:"assistant",content:j.reply});
+    convMessages.push({who:"partner",text:j.reply,pt:j.pt});
     speak(j.reply);
     (j.goalsDone||[]).forEach(i=>markGoal(i));
-    if((j.goalsDone||[]).length>=current.goals.length) saveProgress(current.id);
+    saveConv();
+    if(currentGoalsDone().length>=current.goals.length) saveProgress(current.id);
   }catch(e){
     hideTyping();
     const fb=fallbackTurn();
     addPartner(fb.reply, fb.pt, fb.tip);
-    apiHistory.push({role:"assistant",content:fb.reply});
+    convMessages.push({who:"partner",text:fb.reply,pt:fb.pt});
     speak(fb.reply);
     (fb.goalsDone||[]).forEach(i=>markGoal(i));
+    saveConv();
   }
   busy=false; $("#sendBtn").disabled=false;
 }
@@ -526,18 +598,27 @@ function autoGrow(){const t=$("#input");t.style.height="auto";t.style.height=Mat
 $("#input").addEventListener("input",autoGrow);
 function markGoal(i){const el=document.querySelector(`.goal[data-i="${i}"]`);if(el)el.classList.add("done");}
 
+// Monta o histórico para a IA: pula a saudação inicial, garante alternância e manda só as últimas ~12 mensagens
+function buildApiHistory(){
+  let arr=convMessages.map(m=>({role:m.who==="user"?"user":"assistant",content:m.text}));
+  while(arr.length && arr[0].role!=="user") arr.shift();   // tira a saudação inicial (parceiro)
+  let out=[]; for(const m of arr){ if(out.length&&out[out.length-1].role===m.role) out[out.length-1]=m; else out.push(m); } // garante alternância
+  if(out.length>12) out=out.slice(out.length-12);
+  while(out.length && out[0].role!=="user") out.shift();   // começa sempre por 'user'
+  return out;
+}
 async function askAI(){
   const token = await auth.currentUser.getIdToken();
   const res = await fetch(AI_ENDPOINT,{ method:"POST",
     headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
-    body:JSON.stringify({ scene:{id:current.id,title:current.title,sub:current.sub,with:current.with,goals:current.goals,opener:current.flow[0][0]}, history:apiHistory, name:nameVal() }) });
+    body:JSON.stringify({ scene:{id:current.id,title:current.title,sub:current.sub,with:current.with,goals:current.goals,opener:current.flow[0][0]}, history:buildApiHistory(), name:nameVal() }) });
   if(!res.ok) throw new Error("AI "+res.status);
   const j=await res.json();
   return {reply:j.reply||"…",pt:j.pt||"",tip:j.tip||"",goalsDone:Array.isArray(j.goalsDone)?j.goalsDone:[]};
 }
 // Modo guiado (usado se a IA falhar ou sem config) — usa o roteiro da cena
 function fallbackTurn(){
-  const ut=apiHistory.filter(m=>m.role==="user").length;
+  const ut=convMessages.filter(m=>m.who==="user").length;
   const line = current.flow[ut] || ["Sorry, can you say that again?","Desculpa, pode repetir?"];
   const done = []; for(let i=0;i<Math.min(ut,current.goals.length);i++) done.push(i);
   return {reply:line[0],pt:line[1],tip:"",goalsDone:done};
@@ -613,6 +694,52 @@ async function renderArchive(){
     el.querySelector(".del").onclick=async()=>{try{await remove(ref(rtdb,`users/${uid}/recordings/${r.id}`));if(r.path)await deleteObject(sref(storage,r.path)).catch(()=>{});}catch(e){}renderArchive();refreshCount();};
     list.appendChild(el);
   });
+}
+
+/* ===== Histórico de conversas ===== */
+const sceneEmoji=id=>{const s=SCENES.find(x=>x.id===id);return s?s.emoji:"💬";};
+$("#openHistory").onclick=renderHistory;
+$("#backBtn3").onclick=()=>{renderHome();refreshCount();show("home");};
+$("#backBtn4").onclick=()=>{show("history");};
+async function renderHistory(){
+  show("history"); const list=$("#histList"); list.innerHTML="<div class='empty'>Carregando…</div>";
+  if(!CONFIGURED||!uid){list.innerHTML="<div class='empty'>Entre na sua conta para ver o histórico.</div>";return;}
+  let active={}; try{const a=await get(ref(rtdb,`users/${uid}/activeConv`));active=a.val()||{};}catch(e){}
+  const activeIds=Object.values(active);
+  let arr=[]; try{const snap=await get(ref(rtdb,`users/${uid}/conversations`));const v=snap.val()||{};arr=Object.keys(v).map(k=>({id:k,...v[k]}));}catch(e){}
+  // só conversas com mensagens da aluna (ignora as recém-criadas e ainda vazias)
+  arr=arr.filter(c=>Array.isArray(c.messages)&&c.messages.some(m=>m.who==="user"));
+  arr.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  if(!arr.length){list.innerHTML="<div class='empty'>Nenhuma conversa guardada ainda.<br>Converse numa cena e ela aparece aqui 📖</div>";return;}
+  list.innerHTML="";
+  arr.forEach(c=>{
+    const d=new Date(c.updatedAt||c.startedAt||Date.now()); const ds=d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+    const turns=c.messages.filter(m=>m.who==="user").length;
+    const isActive=activeIds.indexOf(c.id)>=0;
+    const el=document.createElement("div");el.className="rec";
+    el.innerHTML=`<div class="rh"><span class="rt">${sceneEmoji(c.sceneId)} ${esc(c.sceneTitle||"")}${isActive?' <span style="color:var(--teal);font-size:11px">• em andamento</span>':''}</span><span class="rd">${ds}</span></div>
+      <div class="rx">${turns} ${turns===1?"fala sua":"falas suas"}</div>
+      <div class="ra"><button class="mini open">📖 abrir</button><button class="mini del" style="color:#b0473a">🗑️ apagar</button></div>`;
+    el.querySelector(".open").onclick=()=>openConvView(c);
+    el.querySelector(".del").onclick=async()=>{
+      try{ await remove(ref(rtdb,`users/${uid}/conversations/${c.id}`)); if(isActive) await remove(ref(rtdb,`users/${uid}/activeConv/${c.sceneId}`)).catch(()=>{}); }catch(e){}
+      renderHistory(); refreshCount();
+    };
+    list.appendChild(el);
+  });
+}
+function openConvView(c){
+  $("#cvTitle").textContent=(sceneEmoji(c.sceneId)+" "+(c.sceneTitle||""));
+  const d=new Date(c.updatedAt||Date.now()); $("#cvDate").textContent=d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  const chat=$("#cvChat"); chat.innerHTML="";
+  const who=(c.with||"").split(" · ")[0]||"Parceiro";
+  (c.messages||[]).forEach(m=>{
+    const el=document.createElement("div");
+    if(m.who==="user"){ el.className="msg user"; el.innerHTML=`<span class="who">${nameVal()||"Você"}</span><div class="bubble">${esc(m.text)}</div>`; }
+    else { el.className="msg partner"; el.innerHTML=`<span class="who">${who}</span><div class="bubble">${esc(m.text)}</div>${m.pt?`<div class="pt show">${esc(m.pt)}</div>`:""}`; }
+    chat.appendChild(el);
+  });
+  show("convview"); window.scrollTo(0,0);
 }
 </script>
 </body>
