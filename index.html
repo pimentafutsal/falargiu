@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Falar — Inglês de conversação · Kuwait</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF5EC; --surface:#FFFFFF; --surface-2:#FFF9F1;
+    --ink:#2B2420; --muted:#9A8C7D; --line:#EBE0D2;
+    --terra:#C95B36; --terra-soft:#F6E2D7; --terra-deep:#A8401F;
+    --teal:#2E7C73; --teal-soft:#DCEDE9; --gold:#E0A458;
+    --shadow:0 10px 30px rgba(80,50,30,.10); --radius:18px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+    background:radial-gradient(1200px 500px at 85% -10%, #FCEDDF 0%, transparent 60%),radial-gradient(900px 500px at -10% 110%, #E7F0ED 0%, transparent 55%),var(--paper);
+    color:var(--ink);min-height:100vh;line-height:1.5;}
+  .wrap{max-width:680px;margin:0 auto;padding:18px 16px 48px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .logo{font-family:"Fraunces",serif;font-weight:600;font-size:30px;letter-spacing:-.5px;line-height:1}
+  .logo .dot{color:var(--terra)}
+  .tag{font-size:12.5px;color:var(--muted);font-weight:500}
+  .acct{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .acct .nm{font-size:13px;color:var(--muted)}
+  .acct button{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:7px 11px;font:inherit;font-size:12.5px;cursor:pointer;color:var(--ink)}
+  .acct button:hover{border-color:var(--terra)}
+  .syncdot{width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;margin-right:4px}
+
+  .namebox{display:flex;align-items:center;gap:6px;margin:14px 0 0}
+  .namebox span{font-size:13px;color:var(--muted)}
+  .namebox input{width:150px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 10px;font:inherit;font-size:13px;color:var(--ink)}
+  .namebox input:focus{outline:2px solid var(--terra-soft);border-color:var(--terra)}
+
+  .recbtn{display:inline-flex;align-items:center;gap:7px;margin:16px 0 4px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 14px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink);transition:.15s}
+  .recbtn:hover{border-color:var(--teal);background:var(--teal-soft)}
+  .recbtn b{background:var(--teal);color:#fff;border-radius:20px;padding:1px 8px;font-size:12px}
+
+  .hero{margin:14px 0 4px}
+  .hero h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:0 0 4px;letter-spacing:-.3px}
+  .hero p{margin:0;color:var(--muted);font-size:13.5px}
+  .cat{margin-top:24px}
+  .cat h2{font-family:"Fraunces",serif;font-size:17px;font-weight:600;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px;cursor:pointer;transition:transform .15s,box-shadow .2s,border-color .2s;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--terra)}
+  .card .emoji{font-size:24px;line-height:1}
+  .card h3{margin:0;font-size:15px;font-weight:700;letter-spacing:-.2px}
+  .card .sub{font-size:12px;color:var(--muted);font-weight:500}
+  .card .badge{position:absolute;top:11px;right:11px;width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:none;place-items:center;font-size:12px}
+  .card.done .badge{display:grid}
+
+  .screen{display:none}.screen.active{display:block}
+  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+  .back{border:none;background:var(--surface-2);width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--ink);display:grid;place-items:center;flex:0 0 auto}
+  .back:hover{background:var(--terra-soft)}
+  .topbar .meta{min-width:0}
+  .topbar .meta h2{margin:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .meta span{font-size:12px;color:var(--muted)}
+
+  .goals{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
+  .goals .gh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--terra);margin-bottom:8px}
+  .goal{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:3px 0;color:var(--ink)}
+  .goal .chk{width:18px;height:18px;border-radius:6px;border:1.6px solid var(--line);flex:0 0 auto;display:grid;place-items:center;font-size:12px;color:#fff;transition:.2s}
+  .goal.done .chk{background:var(--teal);border-color:var(--teal)}
+  .goal.done{color:var(--muted)}
+
+  .chat{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;min-height:100px}
+  .msg{max-width:84%;display:flex;flex-direction:column;gap:5px}
+  .msg.partner{align-self:flex-start}.msg.user{align-self:flex-end;align-items:flex-end}
+  .bubble{padding:11px 14px;border-radius:16px;font-size:15px;line-height:1.45;word-wrap:break-word}
+  .partner .bubble{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .user .bubble{background:var(--terra);color:#fff;border-bottom-right-radius:5px}
+  .who{font-size:11px;font-weight:700;color:var(--muted);padding:0 4px}
+  .row{display:flex;align-items:center;gap:6px;padding:0 2px;flex-wrap:wrap}
+  .mini{border:none;background:transparent;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;padding:4px 7px;border-radius:8px;display:inline-flex;align-items:center;gap:4px}
+  .mini:hover{background:var(--teal-soft)}
+  .mini.dl{color:var(--terra)} .mini.dl:hover{background:var(--terra-soft)}
+  .pt{font-size:12.5px;color:var(--muted);font-style:italic;padding:0 4px;display:none}
+  .pt.show{display:block}
+  .tip{background:var(--surface-2);border:1px dashed var(--gold);border-radius:12px;padding:8px 11px;font-size:12.5px;color:#8a6d2f;align-self:flex-start;max-width:84%}
+  .tip b{color:var(--gold)}
+  .typing{display:flex;gap:4px;align-items:center;padding:12px 14px}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--muted);opacity:.4;animation:blink 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:.9;transform:translateY(-3px)}}
+
+  .scaffold{margin-bottom:12px}
+  .scaffold .sh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:7px 13px;font-size:13px;cursor:pointer;transition:.15s;font-weight:500;text-align:left}
+  .chip:hover{border-color:var(--terra);background:var(--terra-soft)}
+  .chip small{display:block;color:var(--muted);font-size:10.5px;font-weight:500}
+
+  .composer{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px;position:sticky;bottom:10px;box-shadow:var(--shadow)}
+  .composer .field{display:flex;align-items:flex-end;gap:8px}
+  textarea{flex:1;border:none;resize:none;font:inherit;font-size:15px;color:var(--ink);background:transparent;max-height:120px;padding:8px 4px;line-height:1.4}
+  textarea:focus{outline:none}
+  .iconbtn{border:none;border-radius:50%;width:44px;height:44px;flex:0 0 auto;cursor:pointer;display:grid;place-items:center;font-size:19px;transition:.15s}
+  .micbtn{background:var(--teal-soft);color:var(--teal)}.micbtn:hover{background:#cfe6e1}
+  .micbtn.rec{background:var(--terra);color:#fff;animation:pulse 1.3s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,91,54,.45)}70%{box-shadow:0 0 0 12px rgba(201,91,54,0)}100%{box-shadow:0 0 0 0 rgba(201,91,54,0)}}
+  .sendbtn{background:var(--terra);color:#fff}.sendbtn:hover{background:var(--terra-deep)}
+  .sendbtn:disabled{opacity:.4;cursor:default}
+  .hint{font-size:11.5px;color:var(--muted);padding:6px 6px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .hint button{border:none;background:none;color:var(--teal);font:inherit;font-size:11.5px;font-weight:600;cursor:pointer}
+  .footer{text-align:center;margin-top:24px;font-size:12px;color:var(--muted)}
+
+  .rec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+  .rec .rh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .rec .rt{font-weight:700;font-size:14px}
+  .rec .rd{font-size:11.5px;color:var(--muted)}
+  .rec .rx{font-size:13px;color:var(--ink);margin:6px 0 8px;font-style:italic}
+  .rec .ra{display:flex;gap:6px;flex-wrap:wrap}
+  .empty{text-align:center;color:var(--muted);font-size:14px;padding:30px 10px}
+  .note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.6}
+  .note b{color:var(--terra)}
+  .warn{background:#FCEDE6;border:1px solid var(--terra-soft);color:var(--terra-deep);border-radius:12px;padding:10px 14px;font-size:13px;margin:10px 0;display:none}
+  .warn.show{display:block}
+
+  /* LOGIN */
+  .overlay{position:fixed;inset:0;background:var(--paper);display:none;place-items:center;z-index:100;padding:20px}
+  .overlay.show{display:grid}
+  .login{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;max-width:340px;width:100%;box-shadow:var(--shadow)}
+  .login .logo{font-size:34px;margin-bottom:4px}
+  .login p{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .login label{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px}
+  .login input{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:11px 12px;font:inherit;font-size:14px;color:var(--ink);margin-bottom:12px}
+  .login input:focus{outline:2px solid var(--terra-soft);border-color:var(--terra)}
+  .login .primary{width:100%;border:none;background:var(--terra);color:#fff;border-radius:12px;padding:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px}
+  .login .primary:hover{background:var(--terra-deep)}
+  .login .ghost{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:11px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+  .login .ghost:hover{border-color:var(--teal)}
+  .login .err{color:#b0473a;font-size:12.5px;min-height:18px;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="overlay" class="overlay">
+  <div class="login">
+    <div class="logo">Falar<span class="dot">.</span></div>
+    <p>Entre para estudar e sincronizar suas gravações em qualquer aparelho.</p>
+    <label>E-mail</label>
+    <input id="liEmail" type="email" autocomplete="username" placeholder="seu@email.com">
+    <label>Senha</label>
+    <input id="liPass" type="password" autocomplete="current-password" placeholder="••••••••">
+    <div class="err" id="liErr"></div>
+    <button class="primary" id="liBtn">Entrar</button>
+    <button class="ghost" id="suBtn">Criar uma conta nova</button>
+  </div>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+  <header>
+    <div>
+      <div class="logo">Falar<span class="dot">.</span></div>
+      <div class="tag">conversação em inglês · vida no Kuwait</div>
+    </div>
+    <div class="acct">
+      <span class="nm"><span class="syncdot"></span><span id="acctEmail"></span></span>
+      <button id="logoutBtn">Sair</button>
+    </div>
+  </header>
+
+  <div id="cfgWarn" class="warn"></div>
+
+  <!-- HOME -->
+  <div id="home" class="screen active">
+    <div class="namebox"><span>Seu nome:</span><input id="learnerName" placeholder="opcional" maxlength="20"></div>
+    <button class="recbtn" id="openArchive">🎙️ Minhas gravações <b id="recCount">0</b></button>
+    <div class="hero"><h1>Escolha uma cena para conversar</h1><p>Cada cena é um desafio real. Fale ou escreva — o parceiro responde de verdade.</p></div>
+    <div id="cats"></div>
+    <div class="note">💡 Para falar, o navegador pede permissão do microfone — toque em <b>Permitir</b>. Suas gravações ficam salvas na nuvem e aparecem em qualquer aparelho. Funciona melhor no Chrome.</div>
+  </div>
+
+  <!-- CONVERSA -->
+  <div id="scene" class="screen">
+    <div class="topbar">
+      <button class="back" id="backBtn" aria-label="Voltar">←</button>
+      <div class="meta"><h2 id="sTitle"></h2><span id="sWith"></span></div>
+    </div>
+    <div class="goals"><div class="gh">🎯 Sua missão</div><div id="goalList"></div></div>
+    <div class="chat" id="chat"></div>
+    <div class="scaffold"><div class="sh">Frases para te ajudar — toque para usar</div><div class="chips" id="chips"></div></div>
+    <div class="composer">
+      <div class="field">
+        <button class="iconbtn micbtn" id="micBtn" title="Falar e gravar">🎙️</button>
+        <textarea id="input" rows="1" placeholder="Fale ou escreva em inglês…"></textarea>
+        <button class="iconbtn sendbtn" id="sendBtn" title="Enviar">↑</button>
+      </div>
+      <div class="hint"><span id="micStatus">Toque no microfone para falar 🎙️</span><button id="ttsToggle">🔊 Voz: ligada</button></div>
+    </div>
+    <div class="footer">Errar faz parte. Cada tentativa te deixa mais perto. 🌱</div>
+  </div>
+
+  <!-- ARQUIVO -->
+  <div id="archive" class="screen">
+    <div class="topbar"><button class="back" id="backBtn2" aria-label="Voltar">←</button><div class="meta"><h2>Minhas gravações</h2><span>sincronizadas na sua conta</span></div></div>
+    <div id="recList"></div>
+    <div class="footer">Seus áudios ficam salvos na nuvem 💾</div>
+  </div>
+</div>
+
+<script type="module">
+/* ===== Firebase ===== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
+/* ============================================================
+   >>> PREENCHA AQUI (veja o README) <<<
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDXReV1o4f5_FSJXmaLAFUfYvZI7px6yfE",
+  authDomain: "falar-giu.firebaseapp.com",
+  databaseURL: "https://falar-giu-default-rtdb.firebaseio.com",
+  projectId: "falar-giu",
+  storageBucket: "falar-giu.firebasestorage.app",
+  messagingSenderId: "651533398357",
+  appId: "1:651533398357:web:900fb2ecac56d5761e7fdc"
+};
+// URL da Cloud Function (parceiro de IA) — provisória; troque pela URL real após o deploy no Passo 4:
+const AI_ENDPOINT = "https://us-central1-falar-giu.cloudfunctions.net/chatPartner";
+/* ============================================================ */
+
+const $=s=>document.querySelector(s);
+const CONFIGURED = !firebaseConfig.apiKey.startsWith("SUA_");
+let app, auth, rtdb, storage, uid=null, progress={};
+
+if(CONFIGURED){
+  app=initializeApp(firebaseConfig); auth=getAuth(app); rtdb=getDatabase(app); storage=getStorage(app);
+}else{
+  // sem config: mostra app em modo de demonstração (sem login/sync)
+  $("#overlay").classList.remove("show"); $("#app").style.display="block";
+  $("#cfgWarn").classList.add("show");
+  $("#cfgWarn").innerHTML="⚙️ Firebase ainda não configurado. Login, sincronização e parceiro de IA ficam ativos depois que você preencher a configuração (veja o README). Por enquanto, dá para navegar pelas cenas.";
+  $("#acctEmail").textContent="modo demonstração";
+}
+
+const CATS=[
+  {id:"social",emoji:"👋",label:"Apresentações & convívio"},
+  {id:"shopping",emoji:"🛍️",label:"Compras & serviços"},
+  {id:"food",emoji:"🍽️",label:"Comida & restaurantes"},
+  {id:"city",emoji:"🚕",label:"Na cidade"},
+  {id:"home_family",emoji:"🏠",label:"Casa & família"},
+  {id:"health_work",emoji:"🩺",label:"Saúde & primeiro dia de trabalho"}
+];
+
+const SCENES=[
+/* ---------- SOCIAL ---------- */
+{id:"neighbor",cat:"social",emoji:"👋",level:"básico",title:"Conhecer uma vizinha",sub:"No corredor do prédio",with:"Sara · vizinha",
+ goals:["Se apresentar","Dizer de onde você é","Perguntar o nome dela","Perguntar se ela tem filhos"],
+ chips:[["Hi! I'm…","Oi! Eu sou a…"],["Nice to meet you.","Prazer em conhecer."],["I'm from Brazil.","Eu sou do Brasil."],["What's your name?","Qual é o seu nome?"],["Do you have kids?","Você tem filhos?"],["I just moved here.","Acabei de me mudar pra cá."]],
+ flow:[["Hi! Are you new in the building?","Oi! Você é nova no prédio?"],["Nice to meet you! Where are you from?","Prazer! De onde você é?"],["Oh, Brazil! How wonderful. Welcome to Kuwait.","Ah, Brasil! Que maravilha. Bem-vinda ao Kuwait."],["I'm Sara, by the way. So happy to have a new neighbor!","A propósito, sou a Sara. Que bom ter uma vizinha nova!"],["Yes, I have two kids! We should have coffee soon. See you around! 😊","Sim, tenho dois filhos! Vamos tomar um café qualquer dia. Até logo! 😊"]]},
+
+{id:"playdate",cat:"social",emoji:"🌤️",level:"básico",title:"Papo com outra mãe",sub:"No parquinho do prédio",with:"Layla · outra mãe",
+ goals:["Comentar sobre o clima","Falar de você","Perguntar sobre o bairro","Combinar de se ver de novo"],
+ chips:[["Yes, very hot!","Sim, muito quente!"],["We just arrived.","Acabamos de chegar."],["Where are you from?","De onde você é?"],["Do you like it here?","Você gosta daqui?"],["What's good around here?","O que tem de bom por aqui?"],["See you soon!","Até logo!"]],
+ flow:[["It's so hot today, isn't it? Are your kids playing here too?","Tá tão quente hoje, né? Seus filhos também estão brincando aqui?"],["Ha, yes! Summer here is very hot. Are you new to Kuwait?","Haha, sim! O verão aqui é muito quente. Você é nova no Kuwait?"],["Oh nice! I'm Layla. How are you liking the area?","Ah, que legal! Sou a Layla. Está gostando da região?"],["It's a good, family-friendly area. There's a nice park nearby too.","É uma área boa, ótima pra famílias. Tem um parque legal aqui perto também."],["Yes, let's meet again! Maybe tomorrow, same time? See you! 😊","Sim, vamos nos ver de novo! Talvez amanhã, mesmo horário? Até! 😊"]]},
+
+{id:"smalltalk",cat:"social",emoji:"🤝",level:"básico",title:"Reencontrar uma conhecida",sub:"Conversinha rápida",with:"Nour · conhecida",
+ goals:["Responder como você está","Perguntar como ela está","Falar uma novidade sua","Se despedir"],
+ chips:[["I'm fine, thanks!","Estou bem, obrigada!"],["And you?","E você?"],["Not much, and you?","Nada de mais, e você?"],["I'm a little tired.","Estou um pouco cansada."],["See you later!","Até mais!"],["Have a nice day!","Tenha um bom dia!"]],
+ flow:[["Hi! Long time no see. How are you?","Oi! Quanto tempo. Como você está?"],["I'm doing well, thanks for asking! What's new with you?","Estou bem, obrigada por perguntar! O que há de novo com você?"],["Oh, that's great to hear!","Ah, que ótimo saber disso!"],["Ha, life is always busy, right?","Haha, a vida é sempre corrida, né?"],["Take care! Let's talk again soon. Bye! 👋","Se cuida! Vamos conversar de novo em breve. Tchau! 👋"]]},
+
+{id:"invite",cat:"social",emoji:"☕",level:"básico",title:"Convidar para um café",sub:"Marcar de sair com alguém",with:"Mariam · nova amiga",
+ goals:["Convidar para um café","Sugerir um dia","Sugerir um horário","Confirmar o plano"],
+ chips:[["Do you want to have coffee?","Quer tomar um café?"],["Are you free tomorrow?","Você está livre amanhã?"],["How about Sunday?","Que tal domingo?"],["At 4 pm?","Às 16h?"],["Sounds good!","Parece ótimo!"],["See you then!","Até lá!"]],
+ flow:[["It was so nice talking to you today!","Foi tão bom conversar com você hoje!"],["I'd love that! When are you free?","Eu adoraria! Quando você está livre?"],["Sunday works for me. What time?","Domingo funciona pra mim. Que horas?"],["Four o'clock is perfect.","Quatro horas é perfeito."],["Great, it's a plan! See you Sunday. 😊","Ótimo, combinado! Vejo você no domingo. 😊"]]},
+
+{id:"family",cat:"social",emoji:"👨‍👩‍👧",level:"básico",title:"Falar sobre você e sua família",sub:"Contar um pouco da sua vida",with:"Huda · conhecida",
+ goals:["Dizer se tem filhos","Falar do seu marido","Dizer onde você mora","Perguntar sobre a família dela"],
+ chips:[["I have one child.","Tenho um filho."],["I don't have kids.","Não tenho filhos."],["My husband is a coach.","Meu marido é treinador."],["We live near here.","Moramos perto daqui."],["And your family?","E a sua família?"],["I'm married.","Sou casada."]],
+ flow:[["So, tell me about your family. Do you have children?","Então, me conta da sua família. Você tem filhos?"],["That's lovely! And is your husband here with you?","Que lindo! E seu marido está aqui com você?"],["A coach, how interesting! Where do you live now?","Treinador, que interessante! Onde vocês moram agora?"],["Nice area! My family is big — three kids and lots of cousins.","Área boa! Minha família é grande — três filhos e muitos primos."],["It's so nice to learn about you. Family is everything! 💛","Que bom te conhecer melhor. Família é tudo! 💛"]]},
+
+{id:"party",cat:"social",emoji:"🎉",level:"básico",title:"Conhecer pessoas numa reunião",sub:"Puxar conversa numa festa",with:"Dana · convidada",
+ goals:["Se apresentar","Dizer como conhece o anfitrião","Dizer de onde você é","Elogiar a festa/comida"],
+ chips:[["Hi, I'm…","Oi, sou a…"],["Nice to meet you!","Prazer!"],["I'm a friend of…","Sou amiga de…"],["The food is great!","A comida está ótima!"],["How do you know them?","Como você os conhece?"],["I'm from Brazil.","Sou do Brasil."]],
+ flow:[["Hi! I don't think we've met. I'm Dana.","Oi! Acho que não nos conhecemos. Sou a Dana."],["Nice to meet you! So, how do you know the host?","Prazer! E aí, como você conhece o anfitrião?"],["Oh, nice! And where are you from?","Ah, legal! E de onde você é?"],["Brazil, wonderful! Are you enjoying the party?","Brasil, que ótimo! Está curtindo a festa?"],["Me too! The food is great. Let's get a drink together! 🎉","Eu também! A comida está ótima. Vamos pegar uma bebida juntas! 🎉"]]},
+
+/* ---------- SHOPPING ---------- */
+{id:"coop",cat:"shopping",emoji:"🛒",level:"básico",title:"No mercado (Co-op)",sub:"Achar um produto",with:"Atendente do Co-op",
+ goals:["Dizer o que procura","Perguntar onde fica","Perguntar o preço","Agradecer"],
+ chips:[["Excuse me…","Com licença…"],["Where is the milk?","Onde fica o leite?"],["I'm looking for rice.","Estou procurando arroz."],["Do you have…?","Vocês têm…?"],["How much is this?","Quanto custa isto?"],["Thanks for your help.","Obrigada pela ajuda."]],
+ flow:[["Hello! Can I help you find something?","Olá! Posso te ajudar a achar alguma coisa?"],["Of course! The rice is in aisle three.","Claro! O arroz fica no corredor três."],["It's right there, on the left side.","Fica bem ali, do lado esquerdo."],["It's two dinars.","São dois dinares."],["You're welcome! Have a great day. 🛒","De nada! Tenha um ótimo dia. 🛒"]]},
+
+{id:"clothes",cat:"shopping",emoji:"👗",level:"básico",title:"Comprar roupas",sub:"Numa loja do shopping",with:"Vendedora da loja",
+ goals:["Dizer o que procura","Pedir um tamanho","Perguntar onde provar","Perguntar o preço"],
+ chips:[["I'm looking for a dress.","Procuro um vestido."],["Do you have a bigger size?","Tem um tamanho maior?"],["Can I try it on?","Posso provar?"],["What's the price?","Qual o preço?"],["Do you have it in blue?","Tem na cor azul?"],["I'll take it.","Vou levar."]],
+ flow:[["Hello! Are you looking for anything special?","Olá! Está procurando algo específico?"],["A dress, lovely! What size do you need?","Um vestido, que lindo! Qual tamanho você precisa?"],["Sure, the fitting room is over there.","Claro, o provador fica ali."],["It's twelve dinars.","São doze dinares."],["Great choice! I'll wrap it for you. 👗","Ótima escolha! Vou embrulhar pra você. 👗"]]},
+
+{id:"return",cat:"shopping",emoji:"🔁",level:"básico",title:"Trocar ou devolver",sub:"Devolver um produto",with:"Atendente da loja",
+ goals:["Dizer que quer trocar/devolver","Explicar o motivo","Mostrar o recibo","Agradecer"],
+ chips:[["I want to return this.","Quero devolver isto."],["It's too small.","Está muito pequeno."],["Can I exchange it?","Posso trocar?"],["Here is my receipt.","Aqui está meu recibo."],["It doesn't work.","Não funciona."],["Thank you for helping.","Obrigada pela ajuda."]],
+ flow:[["Hi, how can I help you?","Oi, como posso ajudar?"],["I see. What's the problem with it?","Entendi. Qual é o problema com ele?"],["No worries, we can exchange it. Do you have the receipt?","Sem problema, podemos trocar. Você tem o recibo?"],["Perfect, thank you. Here is your new one.","Perfeito, obrigado. Aqui está o novo."],["All done! Thanks for coming in. 🙂","Tudo certo! Obrigado por vir. 🙂"]]},
+
+{id:"pharmacy",cat:"shopping",emoji:"💊",level:"básico",title:"Na farmácia",sub:"Comprar um remédio simples",with:"Farmacêutico",
+ goals:["Dizer o problema","Dizer há quanto tempo","Perguntar como tomar","Perguntar o preço"],
+ chips:[["I have a headache.","Estou com dor de cabeça."],["Do you have something for a cold?","Tem algo para resfriado?"],["How do I take it?","Como eu tomo?"],["How much is it?","Quanto custa?"],["Is it safe?","É seguro?"],["Thank you.","Obrigada."]],
+ flow:[["Hello! How can I help you today?","Olá! Como posso te ajudar hoje?"],["I'm sorry to hear that. How long have you had it?","Sinto muito. Há quanto tempo você está assim?"],["Okay. This medicine will help. Take one after meals.","Certo. Este remédio vai ajudar. Tome um após as refeições."],["It's one and a half dinars.","É um dinar e meio."],["Feel better soon! Take care. 💊","Melhoras! Se cuida. 💊"]]},
+
+{id:"sim",cat:"shopping",emoji:"📱",level:"básico",title:"Comprar um chip de celular",sub:"Numa loja de telefonia",with:"Vendedor (loja de celular)",
+ goals:["Dizer que quer um chip","Perguntar sobre internet","Perguntar o preço","Pedir ajuda para configurar"],
+ chips:[["I need a SIM card.","Preciso de um chip."],["I want internet.","Quero internet."],["How much per month?","Quanto por mês?"],["Can you help me set it up?","Pode me ajudar a configurar?"],["Do you have a plan?","Vocês têm um plano?"],["Thank you so much.","Muito obrigada."]],
+ flow:[["Welcome! Do you need a new SIM card?","Bem-vinda! Precisa de um chip novo?"],["Great! Do you want a plan with internet?","Ótimo! Quer um plano com internet?"],["We have a good one for ten dinars a month.","Temos um bom por dez dinares por mês."],["Sure, I can set it up for you now.","Claro, posso configurar pra você agora."],["All set! Your number is ready. Enjoy! 📱","Tudo pronto! Seu número está ativo. Aproveite! 📱"]]},
+
+{id:"salon",cat:"shopping",emoji:"💇‍♀️",level:"básico",title:"No salão de cabeleireiro",sub:"Pedir um corte",with:"Cabeleireira",
+ goals:["Dizer o que quer fazer","Dizer o comprimento","Perguntar quanto tempo demora","Perguntar o preço"],
+ chips:[["I'd like a haircut.","Quero cortar o cabelo."],["Just a little, please.","Só um pouco, por favor."],["Not too short.","Não muito curto."],["How long will it take?","Quanto tempo demora?"],["How much is it?","Quanto custa?"],["It looks great, thanks!","Ficou ótimo, obrigada!"]],
+ flow:[["Hi! Welcome. What would you like to do today?","Oi! Bem-vinda. O que gostaria de fazer hoje?"],["A haircut, lovely! How short would you like it?","Um corte, ótimo! Quão curto você quer?"],["Got it, just a little. It will take about thirty minutes.","Entendi, só um pouco. Vai levar uns trinta minutos."],["The price is eight dinars.","O preço é oito dinares."],["All done — you look great! 💇‍♀️","Prontinho — você ficou ótima! 💇‍♀️"]]},
+
+{id:"bank",cat:"shopping",emoji:"💱",level:"básico",title:"Trocar dinheiro",sub:"No câmbio / banco",with:"Atendente do câmbio",
+ goals:["Dizer que quer trocar dinheiro","Dizer a moeda","Perguntar a taxa","Dizer o valor"],
+ chips:[["I want to change money.","Quero trocar dinheiro."],["Dollars to dinars, please.","Dólares para dinares, por favor."],["What's the rate?","Qual o câmbio?"],["A hundred dollars.","Cem dólares."],["Is there a fee?","Tem taxa?"],["Thank you.","Obrigada."]],
+ flow:[["Hello! How can I help you?","Olá! Como posso ajudar?"],["Of course. Which currency would you like to change?","Claro. Qual moeda você quer trocar?"],["Okay, dollars to dinars. The rate today is good.","Certo, dólares para dinares. O câmbio hoje está bom."],["A hundred dollars — here are thirty dinars. No fee.","Cem dólares — aqui estão trinta dinares. Sem taxa."],["Thank you! Have a nice day. 💱","Obrigado! Tenha um bom dia. 💱"]]},
+
+/* ---------- FOOD ---------- */
+{id:"coffee",cat:"food",emoji:"☕",level:"básico",title:"Pedir um café",sub:"Numa cafeteria",with:"Barista",
+ goals:["Pedir uma bebida","Dizer o tamanho","Perguntar o preço","Dizer aqui ou viagem"],
+ chips:[["I'd like a coffee, please.","Eu gostaria de um café, por favor."],["A small latte, please.","Um latte pequeno, por favor."],["With milk, please.","Com leite, por favor."],["How much is it?","Quanto custa?"],["For here / to go.","Para aqui / para viagem."],["Thank you!","Obrigada!"]],
+ flow:[["Hi! Welcome. What can I get for you today?","Oi! Bem-vinda. O que vai querer hoje?"],["A latte, great! What size — small, medium, or large?","Um latte, ótimo! Qual tamanho — pequeno, médio ou grande?"],["Perfect. That's one and a half dinars.","Perfeito. É um dinar e meio."],["For here or to go?","Para comer aqui ou para viagem?"],["Coming right up! Enjoy your coffee. ☕","Já vou preparar! Aproveite seu café. ☕"]]},
+
+{id:"order",cat:"food",emoji:"🍽️",level:"básico",title:"Pedir comida no restaurante",sub:"Fazer o pedido",with:"Garçom",
+ goals:["Pedir um prato","Pedir uma bebida","Pedir uma recomendação","Dizer uma restrição"],
+ chips:[["I'd like the chicken, please.","Quero o frango, por favor."],["What do you recommend?","O que você recomenda?"],["No spicy, please.","Sem pimenta, por favor."],["Water, please.","Água, por favor."],["Is it halal?","É halal?"],["That's all, thank you.","Só isso, obrigada."]],
+ flow:[["Good evening! Are you ready to order?","Boa noite! Já pode pedir?"],["Great choice! Would you like something to drink?","Ótima escolha! Vai querer algo para beber?"],["Of course. Our grilled chicken is very popular.","Claro. Nosso frango grelhado é muito pedido."],["No problem, no spicy. Anything else?","Sem problema, sem pimenta. Mais alguma coisa?"],["Perfect, I'll bring it soon. Enjoy! 🍽️","Perfeito, já trago. Bom apetite! 🍽️"]]},
+
+{id:"bill",cat:"food",emoji:"🧾",level:"básico",title:"Pedir a conta",sub:"No fim da refeição",with:"Garçom",
+ goals:["Dizer que estava bom","Pedir a conta","Perguntar se aceita cartão"],
+ chips:[["It was delicious!","Estava delicioso!"],["Can I have the bill?","Pode trazer a conta?"],["Do you take card?","Aceita cartão?"],["Everything was great.","Estava tudo ótimo."],["Thank you!","Obrigada!"],["Keep the change.","Pode ficar com o troco."]],
+ flow:[["How was everything? Can I get you anything else?","Estava tudo bem? Quer mais alguma coisa?"],["I'm so glad you liked it!","Que bom que você gostou!"],["Of course, here is the bill.","Claro, aqui está a conta."],["Yes, we take card. Thank you, come again! 🧾","Sim, aceitamos cartão. Obrigado, volte sempre! 🧾"]]},
+
+{id:"bakery",cat:"food",emoji:"🥐",level:"básico",title:"Na padaria",sub:"Comprar pão e doces",with:"Atendente da padaria",
+ goals:["Pedir um pão/doce","Dizer a quantidade","Perguntar o preço"],
+ chips:[["I'd like some bread.","Quero um pão."],["Two of these, please.","Dois desses, por favor."],["What is this?","O que é isto?"],["How much is it?","Quanto custa?"],["That's all.","Só isso."],["Thank you!","Obrigada!"]],
+ flow:[["Good morning! What would you like?","Bom dia! O que você gostaria?"],["Sure! How many would you like?","Claro! Quantos você quer?"],["That will be one dinar.","Vai dar um dinar."],["Here you go, fresh and warm! Enjoy. 🥐","Aqui está, fresquinho! Aproveite. 🥐"]]},
+
+{id:"delivery",cat:"food",emoji:"📞",level:"básico",title:"Pedir delivery por telefone",sub:"Ligar para o restaurante",with:"Atendente (telefone)",
+ goals:["Dizer que quer pedir","Fazer o pedido","Dar o endereço","Perguntar quanto tempo demora"],
+ chips:[["I'd like to order, please.","Quero fazer um pedido, por favor."],["One pizza, please.","Uma pizza, por favor."],["For delivery.","Para entrega."],["My address is…","Meu endereço é…"],["How long will it take?","Quanto tempo demora?"],["Thank you!","Obrigada!"]],
+ flow:[["Hello, thank you for calling! Can I take your order?","Alô, obrigado por ligar! Posso anotar seu pedido?"],["Sure! Is this for delivery?","Claro! É para entrega?"],["Great. What's your address, please?","Ótimo. Qual é o seu endereço, por favor?"],["Got it. It will take about forty minutes.","Anotado. Vai levar uns quarenta minutos."],["Thank you! Your food is on the way. 📞","Obrigado! Sua comida está a caminho. 📞"]]},
+
+/* ---------- CITY ---------- */
+{id:"taxi",cat:"city",emoji:"🚕",level:"básico",title:"Pegar um táxi",sub:"Dizer aonde quer ir",with:"Motorista de táxi",
+ goals:["Dizer o destino","Perguntar quanto tempo leva","Perguntar o preço","Pedir para ligar o ar"],
+ chips:[["The Avenues Mall, please.","Para o The Avenues Mall, por favor."],["How long does it take?","Quanto tempo leva?"],["How much is it?","Quanto custa?"],["Can you turn on the AC?","Pode ligar o ar?"],["Is it far?","É longe?"],["Thank you!","Obrigada!"]],
+ flow:[["Hello! Where would you like to go?","Olá! Para onde você quer ir?"],["The Avenues Mall, sure! It's about fifteen minutes.","The Avenues Mall, claro! São uns quinze minutos."],["The fare is around three dinars.","A corrida fica em uns três dinares."],["No problem, I'll turn on the AC.","Sem problema, vou ligar o ar."],["Here we are! Have a great day. 🚕","Chegamos! Tenha um ótimo dia. 🚕"]]},
+
+{id:"careem",cat:"city",emoji:"🚗",level:"básico",title:"Pedir um Careem",sub:"Carro de aplicativo",with:"Motorista do Careem",
+ goals:["Confirmar o destino","Perguntar quanto tempo leva","Pedir para ligar o ar","Pedir para esperar"],
+ chips:[["Yes, that's right.","Sim, isso mesmo."],["How long is the trip?","Quanto tempo de viagem?"],["Can you turn on the AC?","Pode ligar o ar?"],["Can you wait a minute?","Pode esperar um minuto?"],["Here is good.","Aqui está bom."],["Thank you!","Obrigada!"]],
+ flow:[["Hello! I'm your Careem driver. To The Avenues, right?","Olá! Sou seu motorista do Careem. Para o The Avenues, certo?"],["Great. The trip is about twenty minutes.","Ótimo. A viagem é de uns vinte minutos."],["Sure, I'll turn on the air conditioning.","Claro, vou ligar o ar-condicionado."],["No problem, I can wait a minute.","Sem problema, posso esperar um minuto."],["Here is good? Thank you, take care! 🚗","Aqui está bom? Obrigado, se cuida! 🚗"]]},
+
+{id:"directions",cat:"city",emoji:"🧭",level:"básico",title:"Pedir informação na rua",sub:"Achar um lugar",with:"Pessoa na rua",
+ goals:["Pedir ajuda educadamente","Dizer aonde quer ir","Perguntar se é longe","Perguntar o caminho"],
+ chips:[["Excuse me, can you help me?","Com licença, pode me ajudar?"],["Where is the pharmacy?","Onde fica a farmácia?"],["Is it far?","É longe?"],["Left or right?","Esquerda ou direita?"],["How do I get there?","Como eu chego lá?"],["Thank you very much.","Muito obrigada."]],
+ flow:[["Hi! Do you need help with something?","Oi! Precisa de ajuda com algo?"],["Sure! Where do you want to go?","Claro! Aonde você quer ir?"],["The pharmacy? It's not far, just two minutes.","A farmácia? Não é longe, só dois minutos."],["Go straight, then turn right. It's on your left.","Siga reto, depois vire à direita. Fica à sua esquerda."],["You're welcome! Hope you find it. 🧭","De nada! Espero que ache. 🧭"]]},
+
+{id:"mall",cat:"city",emoji:"🏬",level:"básico",title:"Achar uma loja no shopping",sub:"Balcão de informações",with:"Balcão de informações",
+ goals:["Perguntar onde fica uma loja","Perguntar onde fica o banheiro","Perguntar se tem farmácia","Agradecer"],
+ chips:[["Where is the Zara store?","Onde fica a loja da Zara?"],["Where is the bathroom?","Onde fica o banheiro?"],["Is there a pharmacy here?","Tem farmácia aqui?"],["Which floor?","Qual andar?"],["Where is the exit?","Onde fica a saída?"],["Thank you for your help.","Obrigada pela ajuda."]],
+ flow:[["Hello! Welcome to The Avenues. How can I help?","Olá! Bem-vinda ao The Avenues. Como posso ajudar?"],["Zara? It's on the first floor, near the fountain.","Zara? Fica no primeiro andar, perto da fonte."],["The restrooms are right behind you, to the left.","Os banheiros ficam logo atrás de você, à esquerda."],["Yes, there's a pharmacy on the ground floor.","Sim, tem uma farmácia no térreo."],["Happy to help! Enjoy your shopping. 🏬","Fico feliz em ajudar! Boas compras. 🏬"]]},
+
+/* ---------- HOME & FAMILY ---------- */
+{id:"security",cat:"home_family",emoji:"🛎️",level:"básico",title:"Falar com o porteiro",sub:"Na portaria do prédio",with:"Hassan · porteiro",
+ goals:["Cumprimentar","Perguntar sobre uma encomenda","Dizer seu apartamento","Perguntar onde fica o estacionamento"],
+ chips:[["Good morning!","Bom dia!"],["Is there a package for me?","Tem uma encomenda pra mim?"],["I'm in apartment 12.","Sou do apartamento 12."],["Where is the parking?","Onde fica o estacionamento?"],["A friend is coming.","Uma amiga vai chegar."],["Thank you, Hassan.","Obrigada, Hassan."]],
+ flow:[["Good morning! Can I help you?","Bom dia! Posso ajudar?"],["Good morning! Yes, there is a package for you.","Bom dia! Sim, tem uma encomenda pra você."],["Apartment 12? Let me check. Here it is.","Apartamento 12? Deixa eu ver. Aqui está."],["The parking is downstairs, on level B1.","O estacionamento fica embaixo, no nível B1."],["You're welcome! Have a good day. 🛎️","De nada! Tenha um bom dia. 🛎️"]]},
+
+{id:"homedelivery",cat:"home_family",emoji:"📦",level:"básico",title:"Receber uma entrega",sub:"O entregador na porta",with:"Entregador",
+ goals:["Confirmar que é pra você","Perguntar onde assinar","Agradecer"],
+ chips:[["Yes, that's for me.","Sim, é pra mim."],["Where do I sign?","Onde eu assino?"],["Just a moment.","Só um momento."],["Thank you!","Obrigada!"],["Is this from…?","Isto é de…?"],["Have a good day!","Tenha um bom dia!"]],
+ flow:[["Hello! I have a delivery. Is this apartment 12?","Olá! Tenho uma entrega. É o apartamento 12?"],["Great! Can you sign here, please?","Ótimo! Pode assinar aqui, por favor?"],["Perfect, thank you!","Perfeito, obrigado!"],["Have a great day! Bye. 📦","Tenha um ótimo dia! Tchau. 📦"]]},
+
+{id:"school",cat:"home_family",emoji:"🎒",level:"básico",title:"Falar com a professora",sub:"Na escola das crianças",with:"Ms. Sarah · professora",
+ goals:["Se apresentar","Dizer o nome do seu filho","Perguntar como ele está","Perguntar se ele precisa de algo"],
+ chips:[["Hi, I'm…","Oi, sou a…"],["My son's name is…","O nome do meu filho é…"],["How is he doing?","Como ele está indo?"],["Does he need anything?","Ele precisa de algo?"],["Thank you, teacher.","Obrigada, professora."],["Nice to meet you.","Prazer em conhecer."]],
+ flow:[["Hello! You must be the new mom. I'm Ms. Sarah, the teacher.","Olá! Você deve ser a mãe nova. Sou a Ms. Sarah, a professora."],["Nice to meet you! What's your child's name?","Prazer! Qual é o nome do seu filho?"],["Oh, he's doing very well! He's a happy boy.","Ah, ele está indo muito bem! É um menino feliz."],["He just needs a water bottle every day.","Ele só precisa de uma garrafinha de água todo dia."],["Thank you for coming. See you tomorrow! 🎒","Obrigada por vir. Até amanhã! 🎒"]]},
+
+/* ---------- HEALTH & WORK ---------- */
+{id:"clinic",cat:"health_work",emoji:"🩺",level:"trabalho",title:"Conhecer um colega na clínica",sub:"Primeiro dia de trabalho",with:"Omar · colega",
+ goals:["Se apresentar","Dizer que é fisioterapeuta","Perguntar há quanto tempo ele trabalha lá","Pedir ajuda / dizer que está feliz"],
+ chips:[["Hi, I'm…","Oi, eu sou a…"],["I'm a physiotherapist.","Sou fisioterapeuta."],["Nice to meet you, Omar.","Prazer, Omar."],["How long have you worked here?","Há quanto tempo você trabalha aqui?"],["I'm happy to be here.","Estou feliz de estar aqui."],["Can you help me?","Você pode me ajudar?"]],
+ flow:[["Hi, you must be the new physiotherapist! I'm Omar. Welcome to the team.","Oi, você deve ser a nova fisioterapeuta! Sou o Omar. Bem-vinda à equipe."],["Nice to meet you! So you're a physiotherapist too — great!","Prazer! Então você também é fisioterapeuta — ótimo!"],["I've worked here for three years. You'll love it.","Trabalho aqui há três anos. Você vai adorar."],["Of course I can help you! Just ask me anything.","Claro que posso te ajudar! Pode me perguntar qualquer coisa."],["Welcome again! Let's have coffee later. 🩺","Bem-vinda de novo! Vamos tomar um café mais tarde. 🩺"]]},
+
+{id:"appointment",cat:"health_work",emoji:"🗓️",level:"trabalho",title:"Marcar uma consulta",sub:"Por telefone",with:"Recepção da clínica",
+ goals:["Dizer que quer marcar uma consulta","Dizer o motivo","Escolher um dia/horário","Confirmar"],
+ chips:[["I'd like to make an appointment.","Quero marcar uma consulta."],["For a checkup.","Para um check-up."],["Is Sunday possible?","Domingo é possível?"],["In the morning, please.","De manhã, por favor."],["What time?","Que horas?"],["Thank you, goodbye.","Obrigada, tchau."]],
+ flow:[["Good morning, clinic reception. How can I help you?","Bom dia, recepção da clínica. Como posso ajudar?"],["Sure! What is the appointment for?","Claro! A consulta é para quê?"],["Okay. Is Sunday morning good for you?","Certo. Domingo de manhã está bom pra você?"],["Perfect, ten o'clock. What's your name?","Perfeito, dez horas. Qual é o seu nome?"],["All booked! See you Sunday. Goodbye! 🗓️","Agendado! Até domingo. Tchau! 🗓️"]]},
+
+{id:"doctor",cat:"health_work",emoji:"🤒",level:"trabalho",title:"No médico: dizer o que sente",sub:"Explicar um sintoma simples",with:"Dra. Amal · médica",
+ goals:["Dizer como você se sente","Dizer onde dói","Dizer há quanto tempo","Agradecer"],
+ chips:[["I don't feel well.","Não estou me sentindo bem."],["I have a headache.","Estou com dor de cabeça."],["My throat hurts.","Minha garganta dói."],["Since yesterday.","Desde ontem."],["I'm very tired.","Estou muito cansada."],["Thank you, doctor.","Obrigada, doutora."]],
+ flow:[["Hello, please sit down. What's the problem today?","Olá, sente-se por favor. Qual é o problema hoje?"],["I'm sorry. Where exactly does it hurt?","Sinto muito. Onde exatamente dói?"],["I see. How long have you felt this way?","Entendi. Há quanto tempo você se sente assim?"],["Okay. Don't worry, it's not serious. Rest and drink water.","Certo. Não se preocupe, não é grave. Descanse e beba água."],["Take care of yourself. Feel better soon! 🤒","Cuide-se. Melhoras! 🤒"]]}
+];
+
+
+/* ===== Estado ===== */
+let current=null, turn=0, ttsOn=true, busy=false, pendingAudio=null, apiHistory=[];
+const screens={home:$("#home"),scene:$("#scene"),archive:$("#archive")};
+function show(name){Object.values(screens).forEach(s=>s.classList.remove("active"));screens[name].classList.add("active");window.scrollTo(0,0);}
+function nameVal(){return $("#learnerName").value.trim();}
+
+/* ===== Auth ===== */
+if(CONFIGURED){
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){ uid=user.uid; $("#acctEmail").textContent=user.email||"conectada"; await loadProfile(); $("#overlay").classList.remove("show"); $("#app").style.display="block"; renderHome(); refreshCount(); }
+    else { uid=null; $("#app").style.display="none"; $("#overlay").classList.add("show"); }
+  });
+  $("#liBtn").onclick=async()=>{ $("#liErr").textContent=""; try{ await signInWithEmailAndPassword(auth,$("#liEmail").value.trim(),$("#liPass").value);}catch(e){ $("#liErr").textContent=authMsg(e); } };
+  $("#suBtn").onclick=async()=>{ $("#liErr").textContent=""; try{ await createUserWithEmailAndPassword(auth,$("#liEmail").value.trim(),$("#liPass").value);}catch(e){ $("#liErr").textContent=authMsg(e); } };
+  $("#liPass").addEventListener("keydown",e=>{if(e.key==="Enter")$("#liBtn").click();});
+  $("#logoutBtn").onclick=()=>{ signOut(auth); };
+}else{ $("#logoutBtn").style.display="none"; renderHome(); }
+function authMsg(e){const c=(e&&e.code)||"";if(c.includes("invalid-cred")||c.includes("wrong-password")||c.includes("user-not-found"))return "E-mail ou senha incorretos.";if(c.includes("email-already"))return "Esse e-mail já tem conta — toque em Entrar.";if(c.includes("weak-password"))return "A senha precisa de pelo menos 6 caracteres.";if(c.includes("invalid-email"))return "E-mail inválido.";return "Não foi possível. Tente de novo.";}
+
+/* ===== Perfil / progresso (sync) ===== */
+async function loadProfile(){
+  progress={};
+  try{
+    const snap=await get(ref(rtdb,`users/${uid}`)); const d=snap.val()||{};
+    $("#learnerName").value=(d.profile&&d.profile.name)||"";
+    ttsOn=(d.settings&&typeof d.settings.tts==="boolean")?d.settings.tts:true;
+    progress=d.progress||{};
+  }catch(e){}
+  $("#ttsToggle").textContent=ttsOn?"🔊 Voz: ligada":"🔇 Voz: desligada";
+}
+let nameTimer=null;
+$("#learnerName").addEventListener("input",()=>{ if(!CONFIGURED||!uid)return; clearTimeout(nameTimer); nameTimer=setTimeout(()=>set(ref(rtdb,`users/${uid}/profile/name`),nameVal()).catch(()=>{}),500); });
+function saveProgress(id){ progress[id]=true; if(CONFIGURED&&uid) set(ref(rtdb,`users/${uid}/progress/${id}`),true).catch(()=>{}); }
+
+/* ===== Home ===== */
+function renderHome(){
+  const root=$("#cats"); root.innerHTML="";
+  CATS.forEach(c=>{
+    const list=SCENES.filter(s=>s.cat===c.id);
+    const sec=document.createElement("div"); sec.className="cat";
+    sec.innerHTML=`<h2>${c.emoji} ${c.label}</h2><div class="grid"></div>`;
+    const g=sec.querySelector(".grid");
+    list.forEach(s=>{
+      const card=document.createElement("div"); card.className="card"+(progress[s.id]?" done":"");
+      card.innerHTML=`<span class="badge">✓</span><span class="emoji">${s.emoji}</span><h3>${s.title}</h3><span class="sub">${s.sub}</span>`;
+      card.onclick=()=>openScene(s); g.appendChild(card);
+    });
+    root.appendChild(sec);
+  });
+}
+async function refreshCount(){ if(!CONFIGURED||!uid){$("#recCount").textContent="0";return;} try{const snap=await get(ref(rtdb,`users/${uid}/recordings`));const v=snap.val()||{};$("#recCount").textContent=Object.keys(v).length;}catch(e){} }
+
+/* ===== Abrir cena ===== */
+function openScene(s){
+  current=s; turn=0; pendingAudio=null; apiHistory=[];
+  $("#sTitle").textContent=s.title; $("#sWith").textContent=s.with; $("#chat").innerHTML="";
+  const gl=$("#goalList"); gl.innerHTML="";
+  s.goals.forEach((g,i)=>{const d=document.createElement("div");d.className="goal";d.dataset.i=i;d.innerHTML=`<span class="chk">✓</span><span>${g}</span>`;gl.appendChild(d);});
+  const ch=$("#chips"); ch.innerHTML="";
+  s.chips.forEach(([en,pt])=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`${en}<small>${pt}</small>`;b.onclick=()=>{const t=$("#input");t.value=(t.value?t.value+" ":"")+en;t.focus();autoGrow();};ch.appendChild(b);});
+  addPartner(s.flow[0][0], s.flow[0][1], "");
+  speak(s.flow[0][0]); show("scene");
+}
+$("#backBtn").onclick=()=>{stopRec();window.speechSynthesis&&speechSynthesis.cancel();renderHome();show("home");};
+
+/* ===== Mensagens ===== */
+function addPartner(text,pt,tip){
+  const who=current.with.split(" · ")[0];
+  const m=document.createElement("div");m.className="msg partner";
+  m.innerHTML=`<span class="who">${who}</span><div class="bubble">${esc(text)}</div>
+    <div class="row"><button class="mini playp">🔊 ouvir</button><button class="mini transp">🇧🇷 tradução</button></div>
+    <div class="pt">${esc(pt||"")}</div>`;
+  $("#chat").appendChild(m);
+  m.querySelector(".playp").onclick=()=>speak(text);
+  m.querySelector(".transp").onclick=e=>{const p=m.querySelector(".pt");p.classList.toggle("show");e.target.textContent=p.classList.contains("show")?"🇧🇷 ocultar":"🇧🇷 tradução";};
+  if(tip){const t=document.createElement("div");t.className="tip";t.innerHTML=`<b>dica 💡</b> ${esc(tip)}`;$("#chat").appendChild(t);}
+  scrollDown();
+}
+function addUser(text,audio){
+  const who=nameVal()||"Você";
+  const m=document.createElement("div");m.className="msg user";
+  let row=audio?`<div class="row"><button class="mini playu">▶ ouvir</button><button class="mini dl dlu">⬇ baixar</button></div>`:"";
+  m.innerHTML=`<span class="who">${who}</span><div class="bubble">${esc(text)}</div>${row}`;
+  $("#chat").appendChild(m);
+  if(audio){ m.querySelector(".playu").onclick=()=>new Audio(audio.url).play(); m.querySelector(".dlu").onclick=()=>dl(audio.url,`falar_${current.id}_${Date.now()}.${extFor(audio.mime)}`); }
+  scrollDown();
+}
+function showTyping(){const t=document.createElement("div");t.className="msg partner";t.id="typing";t.innerHTML=`<div class="bubble typing"><span></span><span></span><span></span></div>`;$("#chat").appendChild(t);scrollDown();}
+function hideTyping(){const t=$("#typing");if(t)t.remove();}
+function scrollDown(){setTimeout(()=>$("#chat").scrollIntoView({block:"end",behavior:"smooth"}),50);}
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+/* ===== Enviar + parceiro de IA ===== */
+async function send(){
+  const t=$("#input"); const text=t.value.trim(); if(!text||busy)return;
+  busy=true; $("#sendBtn").disabled=true;
+  await finalizeRec(); const audio=pendingAudio; pendingAudio=null;
+  addUser(text,audio); apiHistory.push({role:"user",content:text});
+  if(audio) saveRecording(text,audio);
+  t.value=""; autoGrow(); showTyping();
+  try{
+    const j = CONFIGURED ? await askAI() : fallbackTurn();
+    hideTyping();
+    addPartner(j.reply, j.pt, j.tip);
+    apiHistory.push({role:"assistant",content:j.reply});
+    speak(j.reply);
+    (j.goalsDone||[]).forEach(i=>markGoal(i));
+    if((j.goalsDone||[]).length>=current.goals.length) saveProgress(current.id);
+  }catch(e){
+    hideTyping();
+    const fb=fallbackTurn();
+    addPartner(fb.reply, fb.pt, fb.tip);
+    apiHistory.push({role:"assistant",content:fb.reply});
+    speak(fb.reply);
+    (fb.goalsDone||[]).forEach(i=>markGoal(i));
+  }
+  busy=false; $("#sendBtn").disabled=false;
+}
+$("#sendBtn").onclick=send;
+$("#input").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}});
+function autoGrow(){const t=$("#input");t.style.height="auto";t.style.height=Math.min(t.scrollHeight,120)+"px";}
+$("#input").addEventListener("input",autoGrow);
+function markGoal(i){const el=document.querySelector(`.goal[data-i="${i}"]`);if(el)el.classList.add("done");}
+
+async function askAI(){
+  const token = await auth.currentUser.getIdToken();
+  const res = await fetch(AI_ENDPOINT,{ method:"POST",
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
+    body:JSON.stringify({ scene:{id:current.id,title:current.title,sub:current.sub,with:current.with,goals:current.goals,opener:current.flow[0][0]}, history:apiHistory, name:nameVal() }) });
+  if(!res.ok) throw new Error("AI "+res.status);
+  const j=await res.json();
+  return {reply:j.reply||"…",pt:j.pt||"",tip:j.tip||"",goalsDone:Array.isArray(j.goalsDone)?j.goalsDone:[]};
+}
+// Modo guiado (usado se a IA falhar ou sem config) — usa o roteiro da cena
+function fallbackTurn(){
+  const ut=apiHistory.filter(m=>m.role==="user").length;
+  const line = current.flow[ut] || ["Sorry, can you say that again?","Desculpa, pode repetir?"];
+  const done = []; for(let i=0;i<Math.min(ut,current.goals.length);i++) done.push(i);
+  return {reply:line[0],pt:line[1],tip:"",goalsDone:done};
+}
+
+/* ===== Gravações (salvar na nuvem) ===== */
+async function saveRecording(text,audio){
+  if(!CONFIGURED||!uid) return;
+  try{
+    const recId=Date.now()+"-"+Math.random().toString(36).slice(2,7);
+    const path=`users/${uid}/recordings/${recId}.${extFor(audio.mime)}`;
+    await uploadBytes(sref(storage,path),audio.blob,{contentType:audio.mime});
+    const url=await getDownloadURL(sref(storage,path));
+    await set(ref(rtdb,`users/${uid}/recordings/${recId}`),{sceneId:current.id,sceneTitle:current.title,text,date:Date.now(),url,path,mime:audio.mime});
+    refreshCount();
+  }catch(e){ console.warn("upload falhou",e); }
+}
+function extFor(mime){if(/mp4|m4a/.test(mime||""))return "m4a";if(/ogg/.test(mime||""))return "ogg";return "webm";}
+function dl(url,name){const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();}
+
+/* ===== Voz ===== */
+let voice=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en-GB/i.test(v.lang)&&/female|Sonia|Libby|Hazel/i.test(v.name))||vs.find(v=>/en-US/i.test(v.lang)&&/female|Samantha|Jenny|Aria/i.test(v.name))||vs.find(v=>/^en/i.test(v.lang))||vs[0]||null;}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(text){if(!ttsOn||!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=voice?voice.lang:"en-US";if(voice)u.voice=voice;u.rate=0.88;u.pitch=1.02;speechSynthesis.speak(u);}
+$("#ttsToggle").onclick=function(){ttsOn=!ttsOn;this.textContent=ttsOn?"🔊 Voz: ligada":"🔇 Voz: desligada";if(!ttsOn)speechSynthesis.cancel();if(CONFIGURED&&uid)set(ref(rtdb,`users/${uid}/settings/tts`),ttsOn).catch(()=>{});};
+
+/* ===== Microfone ===== */
+let recog=null, recording=false, recBuffer="", mediaRec=null, chunks=[], recMime="audio/webm", recStopResolver=null;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){recog=new SR();recog.lang="en-US";recog.interimResults=true;recog.continuous=true;
+  recog.onresult=e=>{let interim="",fin="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)fin+=r[0].transcript;else interim+=r[0].transcript;}if(fin)recBuffer+=fin+" ";$("#input").value=(recBuffer+interim).trim();autoGrow();};
+  recog.onerror=ev=>setMic("Não consegui ouvir ("+ev.error+"). Pode escrever também.");}
+$("#micBtn").onclick=()=>{recording?stopRec():startRec();};
+async function startRec(){
+  if(pendingAudio){URL.revokeObjectURL(pendingAudio.url);pendingAudio=null;}
+  recBuffer=$("#input").value?($("#input").value+" "):"";
+  recording=true;$("#micBtn").classList.add("rec");setMic("Gravando… fale em inglês 🎙️ (toque para parar)");
+  let micOk=false;
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true}); micOk=true; chunks=[];
+    recMime=(window.MediaRecorder&&MediaRecorder.isTypeSupported("audio/webm"))?"audio/webm":((window.MediaRecorder&&MediaRecorder.isTypeSupported("audio/mp4"))?"audio/mp4":"");
+    mediaRec=recMime?new MediaRecorder(stream,{mimeType:recMime}):new MediaRecorder(stream); if(!recMime)recMime=mediaRec.mimeType||"audio/webm";
+    mediaRec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+    mediaRec.onstop=()=>{stream.getTracks().forEach(t=>t.stop());if(chunks.length){const blob=new Blob(chunks,{type:recMime});pendingAudio={blob,url:URL.createObjectURL(blob),mime:recMime};}if(recStopResolver){recStopResolver();recStopResolver=null;}};
+    mediaRec.start();
+  }catch(e){mediaRec=null;setMic("Microfone bloqueado. Toque em Permitir, ou escreva. ✍️");}
+  if(SR){try{recog.start();}catch(e){}}
+  if(!micOk&&!SR){setMic("Falar não está disponível aqui — pode escrever 🙂");recording=false;$("#micBtn").classList.remove("rec");}
+}
+function stopRec(){recording=false;$("#micBtn").classList.remove("rec");setMic("Toque no microfone para falar 🎙️");if(SR){try{recog.stop();}catch(e){}}try{if(mediaRec&&mediaRec.state!=="inactive")mediaRec.stop();else if(recStopResolver){recStopResolver();recStopResolver=null;}}catch(e){if(recStopResolver){recStopResolver();recStopResolver=null;}}}
+function finalizeRec(){return new Promise(res=>{if(!recording)return res();if(mediaRec&&mediaRec.state!=="inactive"){recStopResolver=res;stopRec();}else{stopRec();res();}});}
+function setMic(t){$("#micStatus").textContent=t;}
+
+/* ===== Arquivo de gravações ===== */
+$("#openArchive").onclick=renderArchive;
+$("#backBtn2").onclick=()=>{renderHome();refreshCount();show("home");};
+async function renderArchive(){
+  show("archive"); const list=$("#recList"); list.innerHTML="<div class='empty'>Carregando…</div>";
+  if(!CONFIGURED||!uid){list.innerHTML="<div class='empty'>Entre na sua conta para ver as gravações.</div>";return;}
+  let arr=[]; try{const snap=await get(ref(rtdb,`users/${uid}/recordings`));const v=snap.val()||{};arr=Object.keys(v).map(k=>({id:k,...v[k]}));}catch(e){}
+  arr.sort((a,b)=>b.date-a.date);
+  if(!arr.length){list.innerHTML="<div class='empty'>Você ainda não gravou nada.<br>Abra uma cena e toque no microfone 🎙️</div>";return;}
+  list.innerHTML="";
+  arr.forEach(r=>{
+    const d=new Date(r.date); const ds=d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+    const el=document.createElement("div");el.className="rec";
+    el.innerHTML=`<div class="rh"><span class="rt">${esc(r.sceneTitle||"")}</span><span class="rd">${ds}</span></div>
+      <div class="rx">"${esc(r.text||"")}"</div>
+      <div class="ra"><button class="mini play">▶ ouvir</button><button class="mini dl dl2">⬇ baixar</button><button class="mini del" style="color:#b0473a">🗑️ apagar</button></div>`;
+    el.querySelector(".play").onclick=()=>new Audio(r.url).play();
+    el.querySelector(".dl2").onclick=()=>dl(r.url,`falar_${r.sceneId}_${r.date}.${extFor(r.mime)}`);
+    el.querySelector(".del").onclick=async()=>{try{await remove(ref(rtdb,`users/${uid}/recordings/${r.id}`));if(r.path)await deleteObject(sref(storage,r.path)).catch(()=>{});}catch(e){}renderArchive();refreshCount();};
+    list.appendChild(el);
+  });
+}
+</script>
+</body>
+</html>
