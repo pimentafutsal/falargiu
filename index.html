@@ -141,6 +141,42 @@
   .login .ghost{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:11px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
   .login .ghost:hover{border-color:var(--teal)}
   .login .err{color:#b0473a;font-size:12.5px;min-height:18px;margin-bottom:6px}
+
+  /* LISTENING */
+  .lline{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:9px}
+  .lline.a{border-left:4px solid var(--teal)} .lline.b{border-left:4px solid var(--terra)}
+  .lline .sp{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .lline .en{font-size:15px}
+  .lline .lpt{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:4px;display:none}
+  .lline .lpt.show{display:block}
+  .lline .lrow{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+  .lline.playing{background:var(--teal-soft);border-color:var(--teal)}
+  .quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+  .quiz .qh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--terra);margin-bottom:10px}
+  .quiz .q{font-size:14px;font-weight:600;margin:12px 0 8px}
+  .qopt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font:inherit;font-size:14px;cursor:pointer;margin-bottom:7px;color:var(--ink)}
+  .qopt:hover{border-color:var(--terra)}
+  .qopt.right{background:var(--teal-soft);border-color:var(--teal);color:var(--teal);font-weight:600}
+  .qopt.wrong{background:#FCEDE6;border-color:var(--terra);color:var(--terra-deep)}
+
+  /* FUN — Imagem & Palavra */
+  #matchArea{text-align:center}
+  .matchemoji{font-size:96px;line-height:1.2;margin:18px 0 6px}
+  .matchopts{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;margin:10px auto 0}
+  .matchopt{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;color:var(--ink);transition:.12s}
+  .matchopt:hover{border-color:var(--terra);background:var(--terra-soft)}
+  .matchopt.right{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+  .matchopt.wrong{background:#FCEDE6;border-color:var(--terra);color:var(--terra-deep)}
+  .matchfb{min-height:24px;margin-top:12px;font-weight:600;color:var(--teal)}
+
+  /* FUN — Memória */
+  #memBoard{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:0 auto}
+  .mcard{aspect-ratio:1;border:1px solid var(--line);background:var(--terra);border-radius:14px;display:grid;place-items:center;cursor:pointer;font-size:30px;color:transparent;transition:.15s;user-select:none}
+  .mcard .face{opacity:0;font-size:15px;font-weight:700;color:var(--ink);text-align:center;padding:4px;line-height:1.15}
+  .mcard.flip{background:var(--surface);border-color:var(--terra)}
+  .mcard.flip .face{opacity:1}
+  .mcard.done{background:var(--teal-soft);border-color:var(--teal);cursor:default}
+  .mcard.done .face{opacity:.65}
 </style>
 </head>
 <body>
@@ -180,6 +216,8 @@
     <div class="btnrow">
       <button class="recbtn" id="openArchive">🎙️ Minhas gravações <b id="recCount">0</b></button>
       <button class="recbtn" id="openHistory">📖 Histórico <b id="convCount">0</b></button>
+      <button class="recbtn" id="openListen">🎧 Listening</button>
+      <button class="recbtn" id="openFun">🎮 Fun</button>
     </div>
     <div class="hero"><h1>Escolha uma cena para conversar</h1><p>Cada cena é um desafio real. Fale ou escreva — o parceiro responde de verdade.</p></div>
     <div id="cats"></div>
@@ -226,6 +264,47 @@
     <div class="topbar"><button class="back" id="backBtn4" aria-label="Voltar">←</button><div class="meta"><h2 id="cvTitle"></h2><span id="cvDate"></span></div></div>
     <div class="chat" id="cvChat"></div>
     <div class="footer">Conversa guardada (somente leitura) 📖</div>
+  </div>
+
+  <!-- LISTENING (lista) -->
+  <div id="listen" class="screen">
+    <div class="topbar"><button class="back" id="backL" aria-label="Voltar">←</button><div class="meta"><h2>🎧 Listening</h2><span>ouça, leia e repita</span></div></div>
+    <div class="grid" id="listenList"></div>
+    <div class="footer">Ouça antes de falar — assim o ouvido aprende primeiro 🎧</div>
+  </div>
+
+  <!-- LISTENING (player) -->
+  <div id="listenplay" class="screen">
+    <div class="topbar"><button class="back" id="backLP" aria-label="Voltar">←</button><div class="meta"><h2 id="lpTitle"></h2><span id="lpSub"></span></div></div>
+    <button class="recbtn" id="playAll">▶ Ouvir o diálogo inteiro</button>
+    <div id="lpLines" style="margin-top:12px"></div>
+    <div id="lpQuiz"></div>
+    <div class="footer">Toque em 🎤 para repetir uma fala (shadowing) 🌱</div>
+  </div>
+
+  <!-- FUN (menu) -->
+  <div id="fun" class="screen">
+    <div class="topbar"><button class="back" id="backF" aria-label="Voltar">←</button><div class="meta"><h2>🎮 Fun</h2><span>jogos com imagens</span></div></div>
+    <div class="grid">
+      <div class="card" id="goMatch"><span class="emoji">🖼️</span><h3>Imagem & Palavra</h3><span class="sub">Veja a figura, escolha a palavra</span></div>
+      <div class="card" id="goMemory"><span class="emoji">🧠</span><h3>Memória</h3><span class="sub">Pareie figura com palavra</span></div>
+    </div>
+    <div class="footer">Brincar fixa o vocabulário sem esforço 🎮</div>
+  </div>
+
+  <!-- FUN: jogo Imagem & Palavra -->
+  <div id="funmatch" class="screen">
+    <div class="topbar"><button class="back" id="backM1" aria-label="Voltar">←</button><div class="meta"><h2>🖼️ Imagem & Palavra</h2><span id="matchScore">Pontos: 0</span></div></div>
+    <div id="matchArea"></div>
+    <div class="footer">Toque na palavra certa para a figura ✨</div>
+  </div>
+
+  <!-- FUN: jogo Memória -->
+  <div id="funmemory" class="screen">
+    <div class="topbar"><button class="back" id="backM2" aria-label="Voltar">←</button><div class="meta"><h2>🧠 Memória</h2><span id="memInfo">Pares: 0</span></div></div>
+    <div id="memBoard"></div>
+    <button class="recbtn" id="memRestart" style="margin-top:14px">🔄 Reiniciar</button>
+    <div class="footer">Vire as cartas e pareie figura com palavra 🧠</div>
   </div>
 </div>
 
@@ -423,11 +502,130 @@ const SCENES=[
  flow:[["Hello, please sit down. What's the problem today?","Olá, sente-se por favor. Qual é o problema hoje?"],["I'm sorry. Where exactly does it hurt?","Sinto muito. Onde exatamente dói?"],["I see. How long have you felt this way?","Entendi. Há quanto tempo você se sente assim?"],["Okay. Don't worry, it's not serious. Rest and drink water.","Certo. Não se preocupe, não é grave. Descanse e beba água."],["Take care of yourself. Feel better soon! 🤒","Cuide-se. Melhoras! 🤒"]]}
 ];
 
+/* ===== Vocabulário com ícones (emoji) — usado nos jogos da aba Fun ===== */
+const VOCAB=[
+  {en:"coffee",pt:"café",icon:"☕"},{en:"water",pt:"água",icon:"💧"},{en:"milk",pt:"leite",icon:"🥛"},
+  {en:"bread",pt:"pão",icon:"🍞"},{en:"tea",pt:"chá",icon:"🍵"},{en:"rice",pt:"arroz",icon:"🍚"},
+  {en:"apple",pt:"maçã",icon:"🍎"},{en:"pizza",pt:"pizza",icon:"🍕"},{en:"chicken",pt:"frango",icon:"🍗"},
+  {en:"egg",pt:"ovo",icon:"🥚"},{en:"fish",pt:"peixe",icon:"🐟"},{en:"banana",pt:"banana",icon:"🍌"},
+  {en:"house",pt:"casa",icon:"🏠"},{en:"car",pt:"carro",icon:"🚗"},{en:"taxi",pt:"táxi",icon:"🚕"},
+  {en:"bus",pt:"ônibus",icon:"🚌"},{en:"key",pt:"chave",icon:"🔑"},{en:"phone",pt:"telefone",icon:"📱"},
+  {en:"money",pt:"dinheiro",icon:"💵"},{en:"bag",pt:"bolsa",icon:"👜"},{en:"clock",pt:"relógio",icon:"🕐"},
+  {en:"book",pt:"livro",icon:"📖"},{en:"door",pt:"porta",icon:"🚪"},{en:"bed",pt:"cama",icon:"🛏️"},
+  {en:"shoes",pt:"sapatos",icon:"👟"},{en:"dress",pt:"vestido",icon:"👗"},{en:"shirt",pt:"camisa",icon:"👕"},
+  {en:"sun",pt:"sol",icon:"☀️"},{en:"rain",pt:"chuva",icon:"🌧️"},{en:"hot",pt:"quente",icon:"🔥"},
+  {en:"cold",pt:"frio",icon:"❄️"},{en:"doctor",pt:"médica",icon:"🩺"},{en:"hospital",pt:"hospital",icon:"🏥"},
+  {en:"medicine",pt:"remédio",icon:"💊"},{en:"school",pt:"escola",icon:"🏫"},{en:"market",pt:"mercado",icon:"🏪"},
+  {en:"woman",pt:"mulher",icon:"👩"},{en:"man",pt:"homem",icon:"👨"},{en:"baby",pt:"bebê",icon:"👶"},
+  {en:"family",pt:"família",icon:"👨‍👩‍👧"},{en:"arm",pt:"braço",icon:"💪"},{en:"leg",pt:"perna",icon:"🦵"},
+  {en:"hand",pt:"mão",icon:"✋"},{en:"happy",pt:"feliz",icon:"😀"},{en:"tired",pt:"cansada",icon:"😴"},
+  {en:"dog",pt:"cachorro",icon:"🐶"},{en:"cat",pt:"gato",icon:"🐱"},{en:"coffee shop",pt:"cafeteria",icon:"🏬"}
+];
+
+/* ===== Diálogos de Listening — ligados às cenas ===== */
+const DIALOGUES=[
+  {id:"d_neighbor",sceneId:"neighbor",emoji:"👋",title:"Conhecer uma vizinha",a:"Sara",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi! Are you new in the building?",pt:"Oi! Você é nova no prédio?"},
+     {who:"b",en:"Yes, I just moved here. I'm Giu.",pt:"Sim, acabei de me mudar. Sou a Giu."},
+     {who:"a",en:"Nice to meet you! I'm Sara. Where are you from?",pt:"Prazer! Sou a Sara. De onde você é?"},
+     {who:"b",en:"I'm from Brazil. And you?",pt:"Sou do Brasil. E você?"},
+     {who:"a",en:"I'm from England. Welcome to Kuwait!",pt:"Sou da Inglaterra. Bem-vinda ao Kuwait!"}
+   ],
+   questions:[
+     {q:"De onde a Giu é?",options:["Brazil","England","Kuwait"],answer:0},
+     {q:"Qual é o nome da vizinha?",options:["Giu","Sara","Layla"],answer:1}
+   ]},
+  {id:"d_coffee",sceneId:"coffee",emoji:"☕",title:"Pedir um café",a:"Barista",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi! What can I get for you?",pt:"Oi! O que vai querer?"},
+     {who:"b",en:"A coffee, please.",pt:"Um café, por favor."},
+     {who:"a",en:"Small, medium, or large?",pt:"Pequeno, médio ou grande?"},
+     {who:"b",en:"Small, please. How much is it?",pt:"Pequeno, por favor. Quanto custa?"},
+     {who:"a",en:"One dinar. For here or to go?",pt:"Um dinar. Para aqui ou para viagem?"},
+     {who:"b",en:"To go, thank you!",pt:"Para viagem, obrigada!"}
+   ],
+   questions:[
+     {q:"O que a Giu pediu?",options:["Tea","Coffee","Water"],answer:1},
+     {q:"Qual tamanho ela escolheu?",options:["Small","Medium","Large"],answer:0}
+   ]},
+  {id:"d_coop",sceneId:"coop",emoji:"🛒",title:"No mercado (Co-op)",a:"Funcionário",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! Can I help you?",pt:"Olá! Posso ajudar?"},
+     {who:"b",en:"Yes, where is the milk?",pt:"Sim, onde fica o leite?"},
+     {who:"a",en:"It's in aisle two, on the right.",pt:"Fica no corredor dois, à direita."},
+     {who:"b",en:"Thank you. And the bread?",pt:"Obrigada. E o pão?"},
+     {who:"a",en:"The bread is next to the milk.",pt:"O pão fica do lado do leite."}
+   ],
+   questions:[
+     {q:"O que a Giu está procurando primeiro?",options:["Bread","Milk","Rice"],answer:1},
+     {q:"Onde fica o leite?",options:["Aisle one","Aisle two","Aisle three"],answer:1}
+   ]},
+  {id:"d_playdate",sceneId:"playdate",emoji:"🌤️",title:"Papo no parquinho",a:"Layla",b:"Giu",
+   lines:[
+     {who:"a",en:"It's so hot today!",pt:"Está tão quente hoje!"},
+     {who:"b",en:"Yes, very hot. Are your kids here?",pt:"Sim, muito quente. Seus filhos estão aqui?"},
+     {who:"a",en:"Yes, they love this park. I'm Layla.",pt:"Sim, eles amam este parque. Sou a Layla."},
+     {who:"b",en:"Nice to meet you! Let's meet again.",pt:"Prazer! Vamos nos ver de novo."}
+   ],
+   questions:[
+     {q:"Como está o tempo?",options:["Cold","Rainy","Hot"],answer:2},
+     {q:"Onde elas estão?",options:["At a park","At a store","At home"],answer:0}
+   ]},
+  {id:"d_taxi",sceneId:"taxi",emoji:"🚕",title:"Pegar um táxi",a:"Motorista",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! Where would you like to go?",pt:"Olá! Para onde quer ir?"},
+     {who:"b",en:"The Avenues Mall, please.",pt:"Para o The Avenues Mall, por favor."},
+     {who:"a",en:"Sure. It's about fifteen minutes.",pt:"Claro. São uns quinze minutos."},
+     {who:"b",en:"How much is it?",pt:"Quanto custa?"},
+     {who:"a",en:"Around three dinars.",pt:"Uns três dinares."}
+   ],
+   questions:[
+     {q:"Aonde a Giu quer ir?",options:["The hospital","The mall","The school"],answer:1},
+     {q:"Quanto tempo leva?",options:["5 minutes","15 minutes","50 minutes"],answer:1}
+   ]},
+  {id:"d_restaurant",sceneId:"order",emoji:"🍽️",title:"Pedir comida",a:"Garçom",b:"Giu",
+   lines:[
+     {who:"a",en:"Good evening! Are you ready to order?",pt:"Boa noite! Já pode pedir?"},
+     {who:"b",en:"Yes. I'd like the chicken, please.",pt:"Sim. Quero o frango, por favor."},
+     {who:"a",en:"Good choice! Something to drink?",pt:"Boa escolha! Algo para beber?"},
+     {who:"b",en:"Water, please. No spicy.",pt:"Água, por favor. Sem pimenta."},
+     {who:"a",en:"Perfect. I'll bring it soon.",pt:"Perfeito. Já trago."}
+   ],
+   questions:[
+     {q:"O que a Giu pediu para comer?",options:["Fish","Chicken","Pizza"],answer:1},
+     {q:"O que ela pediu para beber?",options:["Water","Coffee","Tea"],answer:0}
+   ]},
+  {id:"d_pharmacy",sceneId:"pharmacy",emoji:"💊",title:"Na farmácia",a:"Farmacêutico",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! How can I help you?",pt:"Olá! Como posso ajudar?"},
+     {who:"b",en:"I have a headache.",pt:"Estou com dor de cabeça."},
+     {who:"a",en:"This medicine will help. Take one after meals.",pt:"Este remédio ajuda. Tome um após as refeições."},
+     {who:"b",en:"Thank you. How much is it?",pt:"Obrigada. Quanto custa?"},
+     {who:"a",en:"One and a half dinars.",pt:"Um dinar e meio."}
+   ],
+   questions:[
+     {q:"Qual é o problema da Giu?",options:["A cold","A headache","A fever"],answer:1},
+     {q:"Quando tomar o remédio?",options:["After meals","Before bed","In the morning"],answer:0}
+   ]},
+  {id:"d_clinic",sceneId:"clinic",emoji:"🩺",title:"Primeiro dia na clínica",a:"Omar",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi! You must be the new physiotherapist.",pt:"Oi! Você deve ser a nova fisioterapeuta."},
+     {who:"b",en:"Yes, I'm Giu. Nice to meet you.",pt:"Sim, sou a Giu. Prazer."},
+     {who:"a",en:"I'm Omar. I've worked here for three years.",pt:"Sou o Omar. Trabalho aqui há três anos."},
+     {who:"b",en:"Great! Can you help me today?",pt:"Ótimo! Pode me ajudar hoje?"},
+     {who:"a",en:"Of course! Welcome to the team.",pt:"Claro! Bem-vinda à equipe."}
+   ],
+   questions:[
+     {q:"Qual é a profissão da Giu?",options:["Doctor","Physiotherapist","Nurse"],answer:1},
+     {q:"Há quanto tempo o Omar trabalha lá?",options:["One year","Three years","Ten years"],answer:1}
+   ]}
+];
 
 /* ===== Estado ===== */
 let current=null, ttsOn=true, busy=false, pendingAudio=null;
 let convId=null, convMessages=[], convStartedAt=0; // conversa atual: [{who:'partner'|'user', text, pt}]
-const screens={home:$("#home"),scene:$("#scene"),archive:$("#archive"),history:$("#history"),convview:$("#convview")};
+const screens={home:$("#home"),scene:$("#scene"),archive:$("#archive"),history:$("#history"),convview:$("#convview"),listen:$("#listen"),listenplay:$("#listenplay"),fun:$("#fun"),funmatch:$("#funmatch"),funmemory:$("#funmemory")};
 function show(name){Object.values(screens).forEach(s=>s.classList.remove("active"));screens[name].classList.add("active");window.scrollTo(0,0);}
 function nameVal(){return $("#learnerName").value.trim();}
 function genId(){return Date.now()+"-"+Math.random().toString(36).slice(2,7);}
@@ -625,14 +823,14 @@ function fallbackTurn(){
 }
 
 /* ===== Gravações (salvar na nuvem) ===== */
-async function saveRecording(text,audio){
+async function saveRecording(text,audio,sid,stitle){
   if(!CONFIGURED||!uid) return;
   try{
     const recId=Date.now()+"-"+Math.random().toString(36).slice(2,7);
     const path=`users/${uid}/recordings/${recId}.${extFor(audio.mime)}`;
     await uploadBytes(sref(storage,path),audio.blob,{contentType:audio.mime});
     const url=await getDownloadURL(sref(storage,path));
-    await set(ref(rtdb,`users/${uid}/recordings/${recId}`),{sceneId:current.id,sceneTitle:current.title,text,date:Date.now(),url,path,mime:audio.mime});
+    await set(ref(rtdb,`users/${uid}/recordings/${recId}`),{sceneId:sid||(current&&current.id)||"listening",sceneTitle:stitle||(current&&current.title)||"Listening",text,date:Date.now(),url,path,mime:audio.mime});
     refreshCount();
   }catch(e){ console.warn("upload falhou",e); }
 }
@@ -740,6 +938,151 @@ function openConvView(c){
     chat.appendChild(el);
   });
   show("convview"); window.scrollTo(0,0);
+}
+
+/* ===== Utilitários compartilhados ===== */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function speakWord(w){if(!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang=voice?voice.lang:"en-US";if(voice)u.voice=voice;u.rate=0.9;speechSynthesis.speak(u);}
+
+/* ===== LISTENING ===== */
+$("#openListen").onclick=renderListenList;
+$("#backL").onclick=()=>{speechSynthesis.cancel();show("home");};
+$("#backLP").onclick=()=>{speechSynthesis.cancel();if(shRec&&shRec.state!=="inactive")shRec.stop();renderListenList();};
+function renderListenList(){
+  show("listen"); const g=$("#listenList"); g.innerHTML="";
+  DIALOGUES.forEach(d=>{
+    const c=document.createElement("div"); c.className="card";
+    c.innerHTML=`<span class="emoji">${d.emoji}</span><h3>${d.title}</h3><span class="sub">${d.lines.length} falas · ${d.questions.length} perguntas</span>`;
+    c.onclick=()=>openDialogue(d); g.appendChild(c);
+  });
+}
+function speakLine(text){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=voice?voice.lang:"en-US";if(voice)u.voice=voice;u.rate=0.9;u.pitch=1.02;speechSynthesis.speak(u);}
+function playAllLines(lines,els){
+  if(!("speechSynthesis" in window))return; speechSynthesis.cancel(); let i=0;
+  (function next(){
+    els.forEach(e=>e.classList.remove("playing"));
+    if(i>=lines.length)return;
+    els[i].classList.add("playing"); els[i].scrollIntoView({block:"center",behavior:"smooth"});
+    const u=new SpeechSynthesisUtterance(lines[i].en); u.lang=voice?voice.lang:"en-US"; if(voice)u.voice=voice; u.rate=0.9; u.pitch=1.02;
+    u.onend=()=>{i++;setTimeout(next,350);}; speechSynthesis.speak(u);
+  })();
+}
+function openDialogue(d){
+  show("listenplay"); $("#lpTitle").textContent=d.emoji+" "+d.title; $("#lpSub").textContent="ouça, leia e repita";
+  const wrap=$("#lpLines"); wrap.innerHTML=""; const els=[];
+  d.lines.forEach(ln=>{
+    const speaker=ln.who==="a"?d.a:d.b;
+    const el=document.createElement("div"); el.className="lline "+ln.who;
+    el.innerHTML=`<div class="sp">${esc(speaker)}</div><div class="en">${esc(ln.en)}</div>
+      <div class="lrow"><button class="mini lplay">🔊 ouvir</button><button class="mini ltr">🇧🇷 tradução</button><button class="mini lsh" style="color:var(--terra)">🎤 repetir</button></div>
+      <div class="lpt">${esc(ln.pt)}</div>`;
+    el.querySelector(".lplay").onclick=()=>speakLine(ln.en);
+    el.querySelector(".ltr").onclick=e=>{const p=el.querySelector(".lpt");p.classList.toggle("show");e.target.textContent=p.classList.contains("show")?"🇧🇷 ocultar":"🇧🇷 tradução";};
+    el.querySelector(".lsh").onclick=e=>shadowToggle(e.target,ln.en,d.title);
+    wrap.appendChild(el); els.push(el);
+  });
+  $("#playAll").onclick=()=>playAllLines(d.lines,els);
+  renderQuiz(d);
+}
+function renderQuiz(d){
+  const box=$("#lpQuiz"); box.innerHTML="";
+  if(!d.questions||!d.questions.length)return;
+  const q=document.createElement("div"); q.className="quiz"; q.innerHTML=`<div class="qh">❓ Entendeu? Responda</div>`;
+  d.questions.forEach(qq=>{
+    const qd=document.createElement("div"); qd.innerHTML=`<div class="q">${esc(qq.q)}</div>`;
+    qq.options.forEach((opt,oi)=>{
+      const b=document.createElement("button"); b.className="qopt"; b.textContent=opt;
+      b.onclick=()=>{
+        if(qd.dataset.done)return; qd.dataset.done="1";
+        if(oi===qq.answer){b.classList.add("right");}
+        else{b.classList.add("wrong");[...qd.querySelectorAll(".qopt")][qq.answer].classList.add("right");}
+      };
+      qd.appendChild(b);
+    });
+    q.appendChild(qd);
+  });
+  box.appendChild(q);
+}
+/* shadowing — gravador próprio, salva em "Minhas gravações" */
+let shRec=null, shChunks=[], shMime="audio/webm", shBtn=null;
+async function shadowToggle(btn,text,title){
+  if(shRec&&shRec.state!=="inactive"){shRec.stop();return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true}); shChunks=[];
+    shMime=(window.MediaRecorder&&MediaRecorder.isTypeSupported("audio/webm"))?"audio/webm":((window.MediaRecorder&&MediaRecorder.isTypeSupported("audio/mp4"))?"audio/mp4":"");
+    shRec=shMime?new MediaRecorder(stream,{mimeType:shMime}):new MediaRecorder(stream); if(!shMime)shMime=shRec.mimeType||"audio/webm";
+    shBtn=btn; btn.textContent="⏹ parar"; btn.style.color="#fff"; btn.style.background="var(--terra)";
+    shRec.ondataavailable=e=>{if(e.data&&e.data.size)shChunks.push(e.data);};
+    shRec.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      if(shBtn){shBtn.textContent="▶ ouvir / ✓ salvo";shBtn.style.background="";shBtn.style.color="var(--teal)";}
+      if(shChunks.length){const blob=new Blob(shChunks,{type:shMime});const audio={blob,url:URL.createObjectURL(blob),mime:shMime};
+        if(shBtn)shBtn.onclick=()=>new Audio(audio.url).play();
+        saveRecording(text,audio,"listening","Listening: "+title);
+      }
+      shRec=null;
+    };
+    shRec.start();
+  }catch(e){ btn.textContent="🎤 sem mic"; }
+}
+
+/* ===== FUN ===== */
+$("#openFun").onclick=()=>show("fun");
+$("#backF").onclick=()=>show("home");
+$("#backM1").onclick=()=>{speechSynthesis.cancel();show("fun");};
+$("#backM2").onclick=()=>{speechSynthesis.cancel();show("fun");};
+$("#goMatch").onclick=startMatch;
+$("#goMemory").onclick=startMemory;
+
+/* Jogo 1 — Imagem & Palavra */
+let matchScore=0;
+function startMatch(){ show("funmatch"); matchScore=0; $("#matchScore").textContent="Pontos: 0"; nextMatch(); }
+function nextMatch(){
+  const area=$("#matchArea"); area.dataset.done="";
+  const correct=VOCAB[Math.floor(Math.random()*VOCAB.length)];
+  const opts=[correct];
+  while(opts.length<4){const c=VOCAB[Math.floor(Math.random()*VOCAB.length)]; if(opts.indexOf(c)<0)opts.push(c);}
+  shuffle(opts);
+  area.innerHTML=`<div class="matchemoji">${correct.icon}</div><div class="matchopts"></div><div class="matchfb" id="matchfb"></div>`;
+  const og=area.querySelector(".matchopts");
+  opts.forEach(o=>{
+    const b=document.createElement("button"); b.className="matchopt"; b.textContent=o.en;
+    b.onclick=()=>{
+      if(area.dataset.done)return; area.dataset.done="1";
+      if(o.en===correct.en){ b.classList.add("right"); matchScore++; $("#matchScore").textContent="Pontos: "+matchScore; $("#matchfb").textContent="Boa! "+correct.icon+" = "+correct.en+" ("+correct.pt+")"; speakWord(correct.en); setTimeout(nextMatch,1300); }
+      else{ b.classList.add("wrong"); [...og.children].forEach(x=>{if(x.textContent===correct.en)x.classList.add("right");}); $("#matchfb").textContent="A certa: "+correct.en+" ("+correct.pt+")"; setTimeout(nextMatch,1700); }
+    };
+    og.appendChild(b);
+  });
+}
+
+/* Jogo 2 — Memória (figura ↔ palavra) */
+$("#memRestart").onclick=startMemory;
+function startMemory(){
+  show("funmemory");
+  const pool=VOCAB.filter(v=>v.en.length<=7 && v.en.indexOf(" ")<0);
+  const n=6; const pick=shuffle(pool.slice()).slice(0,n);
+  let cards=[]; pick.forEach(v=>{cards.push({id:v.en,type:"icon",face:v.icon});cards.push({id:v.en,type:"word",face:v.en});});
+  shuffle(cards);
+  const board=$("#memBoard"); board.innerHTML=""; $("#memInfo").textContent="Pares: 0/"+n;
+  let flipped=[], matched=0, lock=false;
+  cards.forEach(card=>{
+    const el=document.createElement("div"); el.className="mcard";
+    el.innerHTML=`<span class="face">${card.type==="icon"?card.face:esc(card.face)}</span>`;
+    el.onclick=()=>{
+      if(lock||el.classList.contains("flip")||el.classList.contains("done"))return;
+      el.classList.add("flip"); flipped.push({el,card});
+      if(flipped.length===2){
+        lock=true; const x=flipped[0], y=flipped[1];
+        if(x.card.id===y.card.id && x.card.type!==y.card.type){
+          setTimeout(()=>{x.el.classList.add("done");y.el.classList.add("done");x.el.classList.remove("flip");y.el.classList.remove("flip");matched++;$("#memInfo").textContent=(matched===n?"🎉 Completou! ":"Pares: ")+matched+"/"+n;speakWord(x.card.id);flipped=[];lock=false;},450);
+        } else {
+          setTimeout(()=>{x.el.classList.remove("flip");y.el.classList.remove("flip");flipped=[];lock=false;},850);
+        }
+      }
+    };
+    board.appendChild(el);
+  });
 }
 </script>
 </body>
