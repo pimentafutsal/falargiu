@@ -526,99 +526,189 @@ const VOCAB=[
 const DIALOGUES=[
   {id:"d_neighbor",sceneId:"neighbor",emoji:"👋",title:"Conhecer uma vizinha",a:"Sara",b:"Giu",
    lines:[
-     {who:"a",en:"Hi! Are you new in the building?",pt:"Oi! Você é nova no prédio?"},
-     {who:"b",en:"Yes, I just moved here. I'm Giu.",pt:"Sim, acabei de me mudar. Sou a Giu."},
-     {who:"a",en:"Nice to meet you! I'm Sara. Where are you from?",pt:"Prazer! Sou a Sara. De onde você é?"},
-     {who:"b",en:"I'm from Brazil. And you?",pt:"Sou do Brasil. E você?"},
-     {who:"a",en:"I'm from England. Welcome to Kuwait!",pt:"Sou da Inglaterra. Bem-vinda ao Kuwait!"}
+     {who:"a",en:"Hi there! I don't think we've met. Are you new in the building?",pt:"Oi! Acho que não nos conhecemos. Você é nova no prédio?"},
+     {who:"b",en:"Yes, we moved in last week. I'm Giu, nice to meet you.",pt:"Sim, nos mudamos semana passada. Sou a Giu, prazer."},
+     {who:"a",en:"Welcome! I'm Sara. I live right next door, in apartment eleven.",pt:"Bem-vinda! Sou a Sara. Moro bem ao lado, no apartamento onze."},
+     {who:"b",en:"Oh, we're in twelve! So we're neighbors. Where are you from, Sara?",pt:"Ah, estamos no doze! Então somos vizinhas. De onde você é, Sara?"},
+     {who:"a",en:"I'm from England, but I've lived in Kuwait for almost five years now.",pt:"Sou da Inglaterra, mas moro no Kuwait há quase cinco anos."},
+     {who:"b",en:"Five years! That's a long time. We're from Brazil. Everything is still very new for us.",pt:"Cinco anos! É bastante tempo. Nós somos do Brasil. Tudo ainda é muito novo pra gente."},
+     {who:"a",en:"Don't worry, you'll get used to it quickly. The people here are very friendly.",pt:"Não se preocupe, você vai se acostumar rápido. As pessoas aqui são muito simpáticas."},
+     {who:"b",en:"That's good to hear. Do you have any tips for the neighborhood?",pt:"Que bom ouvir isso. Você tem alguma dica do bairro?"},
+     {who:"a",en:"Of course! There's a great Co-op two minutes away, and a nice park for the kids.",pt:"Claro! Tem um ótimo Co-op a dois minutos, e um parque legal para as crianças."},
+     {who:"b",en:"Perfect, we have a little boy. He'll love that.",pt:"Perfeito, temos um menininho. Ele vai adorar."},
+     {who:"a",en:"My daughter is six. Maybe they can play together sometime!",pt:"Minha filha tem seis anos. Talvez eles possam brincar juntos algum dia!"},
+     {who:"b",en:"I'd love that. Would you like to have a coffee this week?",pt:"Eu ia adorar. Você quer tomar um café esta semana?"},
+     {who:"a",en:"Yes, let's do Sunday afternoon. Here, take my number.",pt:"Sim, vamos no domingo à tarde. Toma, anota meu número."},
+     {who:"b",en:"Great, I'll text you. Thank you so much, Sara!",pt:"Ótimo, eu te mando mensagem. Muito obrigada, Sara!"}
    ],
    questions:[
-     {q:"De onde a Giu é?",options:["Brazil","England","Kuwait"],answer:0},
-     {q:"Qual é o nome da vizinha?",options:["Giu","Sara","Layla"],answer:1}
+     {q:"Em qual apartamento a Sara mora?",options:["Eleven","Twelve","Six"],answer:0},
+     {q:"Há quanto tempo a Sara mora no Kuwait?",options:["One year","Almost five years","Ten years"],answer:1},
+     {q:"O que elas combinaram de fazer?",options:["Go to the park","Have coffee on Sunday","Go shopping"],answer:1}
    ]},
+
   {id:"d_coffee",sceneId:"coffee",emoji:"☕",title:"Pedir um café",a:"Barista",b:"Giu",
    lines:[
-     {who:"a",en:"Hi! What can I get for you?",pt:"Oi! O que vai querer?"},
-     {who:"b",en:"A coffee, please.",pt:"Um café, por favor."},
-     {who:"a",en:"Small, medium, or large?",pt:"Pequeno, médio ou grande?"},
-     {who:"b",en:"Small, please. How much is it?",pt:"Pequeno, por favor. Quanto custa?"},
-     {who:"a",en:"One dinar. For here or to go?",pt:"Um dinar. Para aqui ou para viagem?"},
-     {who:"b",en:"To go, thank you!",pt:"Para viagem, obrigada!"}
+     {who:"a",en:"Good morning! Welcome. What can I get for you today?",pt:"Bom dia! Bem-vinda. O que vai querer hoje?"},
+     {who:"b",en:"Good morning. I'd like a coffee, please.",pt:"Bom dia. Eu gostaria de um café, por favor."},
+     {who:"a",en:"Sure! Would you like a latte, a cappuccino, or just a black coffee?",pt:"Claro! Quer um latte, um cappuccino, ou um café preto?"},
+     {who:"b",en:"A latte, please. Can you make it with less sugar?",pt:"Um latte, por favor. Pode fazer com menos açúcar?"},
+     {who:"a",en:"Of course. What size would you like? Small, medium, or large?",pt:"Claro. Qual tamanho você quer? Pequeno, médio ou grande?"},
+     {who:"b",en:"Medium, please. And is the milk regular or do you have oat milk?",pt:"Médio, por favor. E o leite é normal ou vocês têm leite de aveia?"},
+     {who:"a",en:"We have both. The oat milk is half a dinar extra.",pt:"Temos os dois. O leite de aveia custa meio dinar a mais."},
+     {who:"b",en:"That's fine, oat milk please. How much is everything together?",pt:"Tudo bem, leite de aveia, por favor. Quanto fica tudo junto?"},
+     {who:"a",en:"That'll be two dinars. Is it for here or to go?",pt:"Fica dois dinares. É para aqui ou para viagem?"},
+     {who:"b",en:"To go, please. I'm in a bit of a hurry.",pt:"Para viagem, por favor. Estou com um pouco de pressa."},
+     {who:"a",en:"No problem, it'll be ready in two minutes. Can I have a name for the cup?",pt:"Sem problema, fica pronto em dois minutos. Pode me dizer um nome para o copo?"},
+     {who:"b",en:"Giu. G-I-U.",pt:"Giu. G-I-U."},
+     {who:"a",en:"Perfect, Giu. Here you go, have a wonderful day!",pt:"Perfeito, Giu. Aqui está, tenha um ótimo dia!"},
+     {who:"b",en:"Thank you so much. You too!",pt:"Muito obrigada. Você também!"}
    ],
    questions:[
-     {q:"O que a Giu pediu?",options:["Tea","Coffee","Water"],answer:1},
-     {q:"Qual tamanho ela escolheu?",options:["Small","Medium","Large"],answer:0}
+     {q:"O que a Giu pediu?",options:["A cappuccino","A latte","A black coffee"],answer:1},
+     {q:"Qual leite ela escolheu?",options:["Regular milk","Oat milk","No milk"],answer:1},
+     {q:"Ela vai tomar onde?",options:["For here","To go","At home"],answer:1}
    ]},
+
   {id:"d_coop",sceneId:"coop",emoji:"🛒",title:"No mercado (Co-op)",a:"Funcionário",b:"Giu",
    lines:[
-     {who:"a",en:"Hello! Can I help you?",pt:"Olá! Posso ajudar?"},
-     {who:"b",en:"Yes, where is the milk?",pt:"Sim, onde fica o leite?"},
-     {who:"a",en:"It's in aisle two, on the right.",pt:"Fica no corredor dois, à direita."},
-     {who:"b",en:"Thank you. And the bread?",pt:"Obrigada. E o pão?"},
-     {who:"a",en:"The bread is next to the milk.",pt:"O pão fica do lado do leite."}
+     {who:"a",en:"Hello! Welcome to the Co-op. Can I help you find anything?",pt:"Olá! Bem-vinda ao Co-op. Posso te ajudar a achar alguma coisa?"},
+     {who:"b",en:"Yes, please. I'm looking for milk and bread.",pt:"Sim, por favor. Estou procurando leite e pão."},
+     {who:"a",en:"The milk is in aisle two, in the fridge on the right.",pt:"O leite fica no corredor dois, na geladeira à direita."},
+     {who:"b",en:"Great. And the bread?",pt:"Ótimo. E o pão?"},
+     {who:"a",en:"The fresh bread is at the back, near the bakery. You can smell it from here!",pt:"O pão fresco fica lá no fundo, perto da padaria. Dá pra sentir o cheiro daqui!"},
+     {who:"b",en:"Ha, yes! It smells amazing. Do you also have rice?",pt:"Haha, sim! O cheiro está ótimo. Vocês também têm arroz?"},
+     {who:"a",en:"Of course. Rice is in aisle five, with the pasta and the cooking oil.",pt:"Claro. O arroz fica no corredor cinco, com o macarrão e o óleo."},
+     {who:"b",en:"Thank you. One more thing — where can I find eggs?",pt:"Obrigada. Mais uma coisa: onde encontro ovos?"},
+     {who:"a",en:"The eggs are next to the milk, in aisle two as well.",pt:"Os ovos ficam ao lado do leite, no corredor dois também."},
+     {who:"b",en:"Perfect, that's everything. How late are you open today?",pt:"Perfeito, é tudo. Até que horas vocês ficam abertos hoje?"},
+     {who:"a",en:"We're open until midnight, every day.",pt:"Ficamos abertos até meia-noite, todos os dias."},
+     {who:"b",en:"Good to know. Thank you so much for your help!",pt:"Bom saber. Muito obrigada pela ajuda!"},
+     {who:"a",en:"You're very welcome. The checkout is right by the entrance.",pt:"De nada. O caixa fica logo na entrada."}
    ],
    questions:[
-     {q:"O que a Giu está procurando primeiro?",options:["Bread","Milk","Rice"],answer:1},
-     {q:"Onde fica o leite?",options:["Aisle one","Aisle two","Aisle three"],answer:1}
+     {q:"O que a Giu está procurando primeiro?",options:["Rice and eggs","Milk and bread","Oil and pasta"],answer:1},
+     {q:"Onde fica o arroz?",options:["Aisle two","Aisle five","At the back"],answer:1},
+     {q:"Até que horas o Co-op abre?",options:["Until 10 pm","Until midnight","Until 8 pm"],answer:1}
    ]},
+
   {id:"d_playdate",sceneId:"playdate",emoji:"🌤️",title:"Papo no parquinho",a:"Layla",b:"Giu",
    lines:[
-     {who:"a",en:"It's so hot today!",pt:"Está tão quente hoje!"},
-     {who:"b",en:"Yes, very hot. Are your kids here?",pt:"Sim, muito quente. Seus filhos estão aqui?"},
-     {who:"a",en:"Yes, they love this park. I'm Layla.",pt:"Sim, eles amam este parque. Sou a Layla."},
-     {who:"b",en:"Nice to meet you! Let's meet again.",pt:"Prazer! Vamos nos ver de novo."}
+     {who:"a",en:"Wow, it's so hot today, isn't it? I can barely stay in the sun.",pt:"Nossa, está tão quente hoje, né? Mal consigo ficar no sol."},
+     {who:"b",en:"Yes, very hot! In Brazil it's warm too, but not like this.",pt:"Sim, muito quente! No Brasil também é quente, mas não desse jeito."},
+     {who:"a",en:"Oh, you're from Brazil? How exciting! I'm Layla, by the way.",pt:"Ah, você é do Brasil? Que legal! A propósito, sou a Layla."},
+     {who:"b",en:"Nice to meet you, Layla. I'm Giu. Is that your son on the swing?",pt:"Prazer, Layla. Sou a Giu. Aquele é seu filho no balanço?"},
+     {who:"a",en:"Yes, the little one in the red shirt. He's four. And that one?",pt:"Sim, o pequeno de camisa vermelha. Ele tem quatro anos. E aquele ali?"},
+     {who:"b",en:"That's my boy. He just turned three. They look the same age!",pt:"Esse é o meu menino. Ele acabou de fazer três. Parecem ter a mesma idade!"},
+     {who:"a",en:"They do! How long have you been in Kuwait?",pt:"Parecem mesmo! Há quanto tempo você está no Kuwait?"},
+     {who:"b",en:"Only two weeks. We're still figuring everything out.",pt:"Só duas semanas. Ainda estamos entendendo tudo."},
+     {who:"a",en:"I remember that feeling. If you ever need anything, just ask me.",pt:"Eu lembro dessa sensação. Se precisar de qualquer coisa, é só me chamar."},
+     {who:"b",en:"That's so kind. Do you know a good doctor for children?",pt:"Que gentileza. Você conhece um bom médico para crianças?"},
+     {who:"a",en:"Yes, there's a great clinic near the mall. I'll send you the address.",pt:"Sim, tem uma ótima clínica perto do shopping. Eu te mando o endereço."},
+     {who:"b",en:"Thank you! The kids really get along. We should come back tomorrow.",pt:"Obrigada! As crianças se deram super bem. A gente devia voltar amanhã."},
+     {who:"a",en:"Definitely. Same time? We're usually here in the late afternoon.",pt:"Com certeza. Mesmo horário? Geralmente estamos aqui no fim da tarde."},
+     {who:"b",en:"Perfect. See you tomorrow then!",pt:"Perfeito. Então até amanhã!"}
    ],
    questions:[
-     {q:"Como está o tempo?",options:["Cold","Rainy","Hot"],answer:2},
-     {q:"Onde elas estão?",options:["At a park","At a store","At home"],answer:0}
+     {q:"Quantos anos tem o filho da Layla?",options:["Three","Four","Six"],answer:1},
+     {q:"Há quanto tempo a Giu está no Kuwait?",options:["Two weeks","Two months","Two years"],answer:0},
+     {q:"O que a Layla vai mandar para a Giu?",options:["A phone number","A clinic address","A photo"],answer:1}
    ]},
+
   {id:"d_taxi",sceneId:"taxi",emoji:"🚕",title:"Pegar um táxi",a:"Motorista",b:"Giu",
    lines:[
-     {who:"a",en:"Hello! Where would you like to go?",pt:"Olá! Para onde quer ir?"},
-     {who:"b",en:"The Avenues Mall, please.",pt:"Para o The Avenues Mall, por favor."},
-     {who:"a",en:"Sure. It's about fifteen minutes.",pt:"Claro. São uns quinze minutos."},
-     {who:"b",en:"How much is it?",pt:"Quanto custa?"},
-     {who:"a",en:"Around three dinars.",pt:"Uns três dinares."}
+     {who:"a",en:"Hello! Good afternoon. Where would you like to go?",pt:"Olá! Boa tarde. Para onde você quer ir?"},
+     {who:"b",en:"Good afternoon. The Avenues Mall, please. Do you know it?",pt:"Boa tarde. Para o The Avenues Mall, por favor. Você conhece?"},
+     {who:"a",en:"Of course, everybody knows The Avenues. Please, hop in.",pt:"Claro, todo mundo conhece o The Avenues. Por favor, entre."},
+     {who:"b",en:"Thank you. How long does it usually take from here?",pt:"Obrigada. Quanto tempo costuma levar daqui?"},
+     {who:"a",en:"About fifteen minutes, but the traffic is a little heavy right now.",pt:"Uns quinze minutos, mas o trânsito está um pouco pesado agora."},
+     {who:"b",en:"That's okay, I'm not in a hurry. Could you turn on the air conditioning?",pt:"Tudo bem, não estou com pressa. Você pode ligar o ar-condicionado?"},
+     {who:"a",en:"Sure, I'll turn it up. The summer here is really something, isn't it?",pt:"Claro, vou aumentar. O verão aqui é de matar, né?"},
+     {who:"b",en:"It really is. I'm from Brazil and even I find it hot!",pt:"É mesmo. Sou do Brasil e até eu acho quente!"},
+     {who:"a",en:"Ha! Brazil, nice. Football country! Welcome to Kuwait.",pt:"Haha! Brasil, que legal. País do futebol! Bem-vinda ao Kuwait."},
+     {who:"b",en:"Thank you. By the way, how much will the ride be?",pt:"Obrigada. A propósito, quanto vai ser a corrida?"},
+     {who:"a",en:"It's around three dinars. You can pay by card or cash.",pt:"Fica em uns três dinares. Pode pagar no cartão ou em dinheiro."},
+     {who:"b",en:"Cash is fine. Oh, we're almost there already!",pt:"Dinheiro está bom. Ah, já estamos quase chegando!"},
+     {who:"a",en:"Yes, here we are. I'll stop right at the main entrance.",pt:"Sim, chegamos. Vou parar bem na entrada principal."},
+     {who:"b",en:"Perfect. Here you go, keep the change. Thank you!",pt:"Perfeito. Aqui está, pode ficar com o troco. Obrigada!"},
+     {who:"a",en:"Thank you very much! Have a great day and enjoy the mall.",pt:"Muito obrigado! Tenha um ótimo dia e aproveite o shopping."}
    ],
    questions:[
-     {q:"Aonde a Giu quer ir?",options:["The hospital","The mall","The school"],answer:1},
-     {q:"Quanto tempo leva?",options:["5 minutes","15 minutes","50 minutes"],answer:1}
+     {q:"Aonde a Giu quer ir?",options:["The hospital","The Avenues Mall","The airport"],answer:1},
+     {q:"Por que a viagem pode demorar um pouco mais?",options:["Heavy traffic","Bad weather","A long distance"],answer:0},
+     {q:"Como a Giu vai pagar?",options:["By card","Cash","By phone"],answer:1}
    ]},
-  {id:"d_restaurant",sceneId:"order",emoji:"🍽️",title:"Pedir comida",a:"Garçom",b:"Giu",
+
+  {id:"d_restaurant",sceneId:"order",emoji:"🍽️",title:"Jantar num restaurante",a:"Garçom",b:"Giu",
    lines:[
-     {who:"a",en:"Good evening! Are you ready to order?",pt:"Boa noite! Já pode pedir?"},
-     {who:"b",en:"Yes. I'd like the chicken, please.",pt:"Sim. Quero o frango, por favor."},
-     {who:"a",en:"Good choice! Something to drink?",pt:"Boa escolha! Algo para beber?"},
-     {who:"b",en:"Water, please. No spicy.",pt:"Água, por favor. Sem pimenta."},
-     {who:"a",en:"Perfect. I'll bring it soon.",pt:"Perfeito. Já trago."}
+     {who:"a",en:"Good evening, and welcome! Here are your menus. Can I get you something to drink first?",pt:"Boa noite, e bem-vindos! Aqui estão os cardápios. Posso trazer algo para beber primeiro?"},
+     {who:"b",en:"Good evening. Just water for now, please. Still water.",pt:"Boa noite. Por enquanto só água, por favor. Água sem gás."},
+     {who:"a",en:"Of course. Take your time with the menu. Do you have any questions?",pt:"Claro. Fiquem à vontade com o cardápio. Têm alguma dúvida?"},
+     {who:"b",en:"Yes, what do you recommend? It's our first time here.",pt:"Sim, o que você recomenda? É a nossa primeira vez aqui."},
+     {who:"a",en:"The grilled chicken is very popular, and the lamb is excellent too.",pt:"O frango grelhado é muito pedido, e o cordeiro também é excelente."},
+     {who:"b",en:"The chicken sounds good. Is it spicy?",pt:"O frango parece bom. É apimentado?"},
+     {who:"a",en:"It can be, but we can make it mild for you. No problem at all.",pt:"Pode ser, mas podemos fazer suave para você. Sem problema nenhum."},
+     {who:"b",en:"Perfect, the grilled chicken, no spicy, please. Does it come with rice?",pt:"Perfeito, o frango grelhado, sem pimenta, por favor. Vem com arroz?"},
+     {who:"a",en:"Yes, it comes with rice and a small salad. Anything else?",pt:"Sim, vem com arroz e uma saladinha. Mais alguma coisa?"},
+     {who:"b",en:"That's enough for me. Is the chicken halal?",pt:"Pra mim é suficiente. O frango é halal?"},
+     {who:"a",en:"Yes, all our meat is halal. I'll bring your water right away.",pt:"Sim, toda a nossa carne é halal. Já trago a sua água."},
+     {who:"b",en:"Thank you so much.",pt:"Muito obrigada."},
+     {who:"a",en:"Here is your food. Enjoy your meal! Just wave if you need anything.",pt:"Aqui está sua comida. Bom apetite! É só acenar se precisar de algo."},
+     {who:"b",en:"It looks delicious. Could I have the bill when you have a moment?",pt:"Está com uma cara ótima. Pode trazer a conta quando puder?"},
+     {who:"a",en:"Certainly. I'll bring it shortly. Would you like any dessert?",pt:"Claro. Já trago. Você gostaria de alguma sobremesa?"},
+     {who:"b",en:"Not tonight, thank you. Everything was wonderful.",pt:"Hoje não, obrigada. Estava tudo maravilhoso."}
    ],
    questions:[
-     {q:"O que a Giu pediu para comer?",options:["Fish","Chicken","Pizza"],answer:1},
-     {q:"O que ela pediu para beber?",options:["Water","Coffee","Tea"],answer:0}
+     {q:"O que o garçom recomendou?",options:["Fish and rice","Grilled chicken and lamb","Pizza and salad"],answer:1},
+     {q:"Como a Giu pediu o frango?",options:["Very spicy","No spicy (mild)","With extra sauce"],answer:1},
+     {q:"Ela quis sobremesa?",options:["Yes","No","Only coffee"],answer:1}
    ]},
+
   {id:"d_pharmacy",sceneId:"pharmacy",emoji:"💊",title:"Na farmácia",a:"Farmacêutico",b:"Giu",
    lines:[
-     {who:"a",en:"Hello! How can I help you?",pt:"Olá! Como posso ajudar?"},
-     {who:"b",en:"I have a headache.",pt:"Estou com dor de cabeça."},
-     {who:"a",en:"This medicine will help. Take one after meals.",pt:"Este remédio ajuda. Tome um após as refeições."},
-     {who:"b",en:"Thank you. How much is it?",pt:"Obrigada. Quanto custa?"},
-     {who:"a",en:"One and a half dinars.",pt:"Um dinar e meio."}
+     {who:"a",en:"Hello! How can I help you today?",pt:"Olá! Como posso te ajudar hoje?"},
+     {who:"b",en:"Hi. I have a bad headache and I feel a little tired.",pt:"Oi. Estou com uma dor de cabeça forte e me sinto um pouco cansada."},
+     {who:"a",en:"I'm sorry to hear that. How long have you been feeling like this?",pt:"Sinto muito por isso. Há quanto tempo você está se sentindo assim?"},
+     {who:"b",en:"Since yesterday morning. I think it's the heat.",pt:"Desde ontem de manhã. Acho que é o calor."},
+     {who:"a",en:"That's very possible. Are you drinking enough water?",pt:"É bem possível. Você está bebendo água suficiente?"},
+     {who:"b",en:"Maybe not enough, honestly.",pt:"Talvez não o suficiente, sinceramente."},
+     {who:"a",en:"That's important here. This medicine will help with the headache.",pt:"Isso é importante aqui. Este remédio vai ajudar com a dor de cabeça."},
+     {who:"b",en:"Okay. How do I take it?",pt:"Certo. Como eu tomo?"},
+     {who:"a",en:"Take one tablet after meals, two times a day. Don't take it on an empty stomach.",pt:"Tome um comprimido após as refeições, duas vezes ao dia. Não tome de estômago vazio."},
+     {who:"b",en:"Got it. Is it safe? I'm not taking any other medicine.",pt:"Entendi. É seguro? Não estou tomando nenhum outro remédio."},
+     {who:"a",en:"Yes, it's very safe. But if you still feel bad after three days, see a doctor.",pt:"Sim, é bem seguro. Mas se você continuar mal depois de três dias, procure um médico."},
+     {who:"b",en:"I will. How much is it?",pt:"Vou procurar. Quanto custa?"},
+     {who:"a",en:"One and a half dinars. And please, rest and drink lots of water.",pt:"Um dinar e meio. E por favor, descanse e beba bastante água."},
+     {who:"b",en:"Thank you so much for your help. Have a good day!",pt:"Muito obrigada pela ajuda. Tenha um bom dia!"}
    ],
    questions:[
-     {q:"Qual é o problema da Giu?",options:["A cold","A headache","A fever"],answer:1},
-     {q:"Quando tomar o remédio?",options:["After meals","Before bed","In the morning"],answer:0}
+     {q:"Qual é o problema da Giu?",options:["A cold","A headache and tiredness","A stomachache"],answer:1},
+     {q:"Como ela deve tomar o remédio?",options:["After meals, twice a day","Before bed only","On an empty stomach"],answer:0},
+     {q:"O que ela deve fazer se continuar mal?",options:["Take more pills","See a doctor","Wait one week"],answer:1}
    ]},
+
   {id:"d_clinic",sceneId:"clinic",emoji:"🩺",title:"Primeiro dia na clínica",a:"Omar",b:"Giu",
    lines:[
-     {who:"a",en:"Hi! You must be the new physiotherapist.",pt:"Oi! Você deve ser a nova fisioterapeuta."},
-     {who:"b",en:"Yes, I'm Giu. Nice to meet you.",pt:"Sim, sou a Giu. Prazer."},
-     {who:"a",en:"I'm Omar. I've worked here for three years.",pt:"Sou o Omar. Trabalho aqui há três anos."},
-     {who:"b",en:"Great! Can you help me today?",pt:"Ótimo! Pode me ajudar hoje?"},
-     {who:"a",en:"Of course! Welcome to the team.",pt:"Claro! Bem-vinda à equipe."}
+     {who:"a",en:"Good morning! You must be Giu, the new physiotherapist. Welcome to the team!",pt:"Bom dia! Você deve ser a Giu, a nova fisioterapeuta. Bem-vinda à equipe!"},
+     {who:"b",en:"Good morning! Yes, that's me. Thank you, I'm very happy to be here.",pt:"Bom dia! Sim, sou eu. Obrigada, estou muito feliz de estar aqui."},
+     {who:"a",en:"I'm Omar, one of the physiotherapists. I've worked here for three years.",pt:"Sou o Omar, um dos fisioterapeutas. Trabalho aqui há três anos."},
+     {who:"b",en:"Nice to meet you, Omar. How many people work in the clinic?",pt:"Prazer, Omar. Quantas pessoas trabalham na clínica?"},
+     {who:"a",en:"We're a small team — five therapists, two doctors, and three at the front desk.",pt:"Somos uma equipe pequena: cinco terapeutas, dois médicos e três na recepção."},
+     {who:"b",en:"That sounds nice. Are most of the patients local?",pt:"Que legal. A maioria dos pacientes é local?"},
+     {who:"a",en:"It's a real mix — Kuwaitis and people from all over the world. Many speak English.",pt:"É bem misturado: kuwaitianos e gente do mundo todo. Muitos falam inglês."},
+     {who:"b",en:"Good, that makes me feel a bit calmer. What time do we usually start?",pt:"Bom, isso me deixa um pouco mais calma. A que horas costumamos começar?"},
+     {who:"a",en:"The first patients arrive at eight, so try to be here by seven forty-five.",pt:"Os primeiros pacientes chegam às oito, então tente estar aqui às sete e quarenta e cinco."},
+     {who:"b",en:"Understood. And where can I leave my things?",pt:"Entendido. E onde posso deixar minhas coisas?"},
+     {who:"a",en:"There's a staff room down the hall, on the left. I'll show you in a minute.",pt:"Tem uma sala dos funcionários no corredor, à esquerda. Já te mostro."},
+     {who:"b",en:"Thank you. If I have questions during the day, can I ask you?",pt:"Obrigada. Se eu tiver dúvidas durante o dia, posso te perguntar?"},
+     {who:"a",en:"Of course! Ask me anything, anytime. We all help each other here.",pt:"Claro! Pode me perguntar qualquer coisa, a qualquer hora. Aqui todos se ajudam."},
+     {who:"b",en:"That's a relief. Thank you for being so kind, Omar.",pt:"Que alívio. Obrigada por ser tão gentil, Omar."},
+     {who:"a",en:"My pleasure. Let's get you a coffee and then I'll show you around.",pt:"Imagina. Vamos pegar um café e depois eu te mostro tudo."}
    ],
    questions:[
-     {q:"Qual é a profissão da Giu?",options:["Doctor","Physiotherapist","Nurse"],answer:1},
-     {q:"Há quanto tempo o Omar trabalha lá?",options:["One year","Three years","Ten years"],answer:1}
+     {q:"Qual é a profissão da Giu?",options:["Doctor","Physiotherapist","Receptionist"],answer:1},
+     {q:"A que horas o Omar pediu para ela chegar?",options:["7:45","8:30","9:00"],answer:0},
+     {q:"O que o Omar ofereceu no final?",options:["A coffee and a tour","A day off","A patient list"],answer:0}
    ]}
 ];
 
