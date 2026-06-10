@@ -151,6 +151,9 @@
   .lline .lpt.show{display:block}
   .lline .lrow{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
   .lline.playing{background:var(--teal-soft);border-color:var(--teal)}
+  .lpctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .lpctrl .recbtn{margin:14px 0 0}
+  #stopAll{color:var(--terra-deep)} #repeatLine{color:var(--teal)}
   .quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
   .quiz .qh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--terra);margin-bottom:10px}
   .quiz .q{font-size:14px;font-weight:600;margin:12px 0 8px}
@@ -276,7 +279,11 @@
   <!-- LISTENING (player) -->
   <div id="listenplay" class="screen">
     <div class="topbar"><button class="back" id="backLP" aria-label="Voltar">←</button><div class="meta"><h2 id="lpTitle"></h2><span id="lpSub"></span></div></div>
-    <button class="recbtn" id="playAll">▶ Ouvir o diálogo inteiro</button>
+    <div class="lpctrl">
+      <button class="recbtn" id="playAll">▶ Ouvir o diálogo inteiro</button>
+      <button class="recbtn" id="repeatLine" style="display:none">🔁 Repetir a fala</button>
+      <button class="recbtn" id="stopAll" style="display:none">⏹ Parar</button>
+    </div>
     <div id="lpLines" style="margin-top:12px"></div>
     <div id="lpQuiz"></div>
     <div class="footer">Toque em 🎤 para repetir uma fala (shadowing) 🌱</div>
@@ -709,7 +716,409 @@ const DIALOGUES=[
      {q:"Qual é a profissão da Giu?",options:["Doctor","Physiotherapist","Receptionist"],answer:1},
      {q:"A que horas o Omar pediu para ela chegar?",options:["7:45","8:30","9:00"],answer:0},
      {q:"O que o Omar ofereceu no final?",options:["A coffee and a tour","A day off","A patient list"],answer:0}
-   ]}
+   ]},
+  {id:"d_smalltalk",sceneId:"smalltalk",emoji:"🤝",title:"Reencontrar uma conhecida",a:"Nour",b:"Giu",
+   lines:[
+     {who:"a",en:"Giu! Hi! Long time no see. How are you?",pt:"Giu! Oi! Quanto tempo. Como você está?"},
+     {who:"b",en:"Nour! What a surprise. I'm doing well, thanks. And you?",pt:"Nour! Que surpresa. Estou bem, obrigada. E você?"},
+     {who:"a",en:"I'm good, just very busy with work lately. What about you?",pt:"Estou bem, só muito ocupada com o trabalho ultimamente. E você?"},
+     {who:"b",en:"Same here, but we're settling in nicely. The kids love their new school.",pt:"Aqui também, mas estamos nos adaptando bem. As crianças amam a escola nova."},
+     {who:"a",en:"That's wonderful to hear. Are you still living near the park?",pt:"Que ótimo ouvir isso. Você ainda mora perto do parque?"},
+     {who:"b",en:"Yes, same building. You should come over for tea sometime.",pt:"Sim, mesmo prédio. Você devia aparecer para um chá qualquer dia."},
+     {who:"a",en:"I'd love to! By the way, did you hear about the new café downtown?",pt:"Eu adoraria! A propósito, soube do café novo no centro?"},
+     {who:"b",en:"No, I didn't. Is it good?",pt:"Não, não soube. É bom?"},
+     {who:"a",en:"It's lovely. We should go together one morning.",pt:"É ótimo. A gente devia ir junto numa manhã dessas."},
+     {who:"b",en:"Let's do it. I really have to run now, but it was so nice to see you.",pt:"Vamos sim. Preciso ir correndo agora, mas foi muito bom te ver."},
+     {who:"a",en:"You too! Take care, and say hi to your husband.",pt:"Você também! Se cuida, e manda um oi pro seu marido."},
+     {who:"b",en:"I will. Bye, Nour!",pt:"Vou mandar. Tchau, Nour!"}
+   ],
+   questions:[
+     {q:"Como a Nour anda se sentindo?",options:["Bored","Busy with work","Sick"],answer:1},
+     {q:"Sobre o que a Nour comentou?",options:["A new café","A new park","A new school"],answer:0},
+     {q:"Por que a Giu precisa sair?",options:["She's tired","She has to run","She's late for work"],answer:1}
+   ]},
+  {id:"d_invite",sceneId:"invite",emoji:"☕",title:"Convidar para um café",a:"Mariam",b:"Giu",
+   lines:[
+     {who:"b",en:"Mariam, it was really nice talking to you today.",pt:"Mariam, foi muito bom conversar com você hoje."},
+     {who:"a",en:"It was! You're so easy to talk to.",pt:"Foi mesmo! Você é tão fácil de conversar."},
+     {who:"b",en:"Would you like to have a coffee together this week?",pt:"Você gostaria de tomar um café comigo esta semana?"},
+     {who:"a",en:"I'd love that! When are you free?",pt:"Eu adoraria! Quando você está livre?"},
+     {who:"b",en:"I'm free on Sunday or Monday. What works for you?",pt:"Estou livre no domingo ou na segunda. O que funciona pra você?"},
+     {who:"a",en:"Sunday is perfect. Morning or afternoon?",pt:"Domingo é perfeito. De manhã ou à tarde?"},
+     {who:"b",en:"Let's say four in the afternoon. Do you know a good place?",pt:"Vamos dizer quatro da tarde. Você conhece um lugar bom?"},
+     {who:"a",en:"Yes, there's a quiet café near the mall. They have great cake.",pt:"Sim, tem um café tranquilo perto do shopping. Eles têm um bolo ótimo."},
+     {who:"b",en:"Sounds perfect. Should we meet there or go together?",pt:"Parece perfeito. A gente se encontra lá ou vai junto?"},
+     {who:"a",en:"Let's meet there. I'll send you the location.",pt:"Vamos nos encontrar lá. Eu te mando a localização."},
+     {who:"b",en:"Great, it's a plan. I'm really looking forward to it!",pt:"Ótimo, combinado. Estou bem animada!"},
+     {who:"a",en:"Me too! See you on Sunday, Giu.",pt:"Eu também! Até domingo, Giu."}
+   ],
+   questions:[
+     {q:"Que dia elas combinaram?",options:["Saturday","Sunday","Monday"],answer:1},
+     {q:"Que horas elas vão se encontrar?",options:["At 4 pm","At 10 am","At noon"],answer:0},
+     {q:"Onde fica o café?",options:["Near the park","Near the mall","Near the school"],answer:1}
+   ]},
+  {id:"d_family",sceneId:"family",emoji:"👨‍👩‍👧",title:"Falar sobre você e sua família",a:"Huda",b:"Giu",
+   lines:[
+     {who:"a",en:"So, tell me a little about your family, Giu. Do you have children?",pt:"Então, me conta um pouco da sua família, Giu. Você tem filhos?"},
+     {who:"b",en:"Yes, I have one son. He's three years old.",pt:"Sim, tenho um filho. Ele tem três anos."},
+     {who:"a",en:"Oh, what a sweet age! And is your husband here with you in Kuwait?",pt:"Ah, que idade fofa! E seu marido está aqui com você no Kuwait?"},
+     {who:"b",en:"Yes, he is. He's a futsal goalkeeper coach.",pt:"Sim, está. Ele é treinador de goleiros de futsal."},
+     {who:"a",en:"How interesting! So sports is a big part of your life.",pt:"Que interessante! Então o esporte é uma parte grande da sua vida."},
+     {who:"b",en:"It really is. And I'm a physiotherapist, so we both love movement.",pt:"É mesmo. E eu sou fisioterapeuta, então nós dois amamos o movimento."},
+     {who:"a",en:"That's a lovely match. Where do you live now?",pt:"Que combinação linda. Onde vocês moram agora?"},
+     {who:"b",en:"We live close to here, in a building near the park. And you?",pt:"Moramos perto daqui, num prédio perto do parque. E você?"},
+     {who:"a",en:"My family is big — I have three children and my parents live nearby.",pt:"Minha família é grande: tenho três filhos e meus pais moram perto."},
+     {who:"b",en:"That's beautiful. It must be nice to have them close.",pt:"Que lindo. Deve ser bom tê-los por perto."},
+     {who:"a",en:"It is. Family is everything, especially when you're far from home.",pt:"É sim. Família é tudo, ainda mais quando se está longe de casa."},
+     {who:"b",en:"I agree completely. Thank you for asking about mine.",pt:"Concordo totalmente. Obrigada por perguntar da minha."}
+   ],
+   questions:[
+     {q:"Quantos filhos a Giu tem?",options:["One","Two","Three"],answer:0},
+     {q:"Qual é a profissão do marido da Giu?",options:["A doctor","A futsal goalkeeper coach","A teacher"],answer:1},
+     {q:"Quantos filhos a Huda tem?",options:["One","Two","Three"],answer:2}
+   ]},
+  {id:"d_party",sceneId:"party",emoji:"🎉",title:"Conhecer pessoas numa reunião",a:"Dana",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi! I don't think we've met. I'm Dana.",pt:"Oi! Acho que não nos conhecemos. Sou a Dana."},
+     {who:"b",en:"Hi Dana, I'm Giu. Nice to meet you.",pt:"Oi Dana, sou a Giu. Prazer em conhecer."},
+     {who:"a",en:"Likewise! So, how do you know the host?",pt:"Igualmente! E aí, como você conhece o anfitrião?"},
+     {who:"b",en:"My husband works with him. We just moved to Kuwait.",pt:"Meu marido trabalha com ele. Acabamos de nos mudar para o Kuwait."},
+     {who:"a",en:"Oh, welcome! How are you finding it so far?",pt:"Ah, bem-vinda! O que está achando até agora?"},
+     {who:"b",en:"Honestly, everyone has been so kind. Where are you from, Dana?",pt:"Sinceramente, todo mundo tem sido muito gentil. De onde você é, Dana?"},
+     {who:"a",en:"I'm from Lebanon, but I've been here for years. And you?",pt:"Sou do Líbano, mas estou aqui há anos. E você?"},
+     {who:"b",en:"Brazil. The food here at the party is amazing, by the way.",pt:"Brasil. A comida aqui na festa está incrível, aliás."},
+     {who:"a",en:"Isn't it? You have to try the desserts. They're homemade.",pt:"Né? Você tem que provar as sobremesas. São caseiras."},
+     {who:"b",en:"I definitely will. Are most of these people from work?",pt:"Com certeza vou. A maioria dessas pessoas é do trabalho?"},
+     {who:"a",en:"Some are, but many are neighbors too. It's a friendly group.",pt:"Algumas são, mas muitas são vizinhas também. É um grupo simpático."},
+     {who:"b",en:"That's great. Shall we go get some of that dessert together?",pt:"Que ótimo. Vamos pegar um pouco dessa sobremesa juntas?"},
+     {who:"a",en:"Yes, let's! Come on.",pt:"Sim, vamos! Vem."}
+   ],
+   questions:[
+     {q:"Como a Giu conhece o anfitrião?",options:["Through her husband","Through a neighbor","From school"],answer:0},
+     {q:"De onde a Dana é?",options:["Brazil","Lebanon","England"],answer:1},
+     {q:"O que a Dana recomendou provar?",options:["The desserts","The coffee","The bread"],answer:0}
+   ]},
+  {id:"d_clothes",sceneId:"clothes",emoji:"👗",title:"Comprar roupas",a:"Vendedora",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! Welcome. Are you looking for anything special today?",pt:"Olá! Bem-vinda. Está procurando algo especial hoje?"},
+     {who:"b",en:"Hi. Yes, I'm looking for a dress for a dinner.",pt:"Oi. Sim, estou procurando um vestido para um jantar."},
+     {who:"a",en:"Lovely! What color do you have in mind?",pt:"Que ótimo! Que cor você tem em mente?"},
+     {who:"b",en:"Maybe dark blue or black. Something simple.",pt:"Talvez azul-escuro ou preto. Algo simples."},
+     {who:"a",en:"I have a beautiful navy dress right here. What size do you need?",pt:"Tenho um vestido azul-marinho lindo bem aqui. Qual tamanho você precisa?"},
+     {who:"b",en:"Medium, please. Do you have a bigger one too, just in case?",pt:"Médio, por favor. Você tem um maior também, por garantia?"},
+     {who:"a",en:"Of course, here's a medium and a large. Would you like to try them on?",pt:"Claro, aqui estão um médio e um grande. Gostaria de provar?"},
+     {who:"b",en:"Yes, please. Where is the fitting room?",pt:"Sim, por favor. Onde fica o provador?"},
+     {who:"a",en:"It's just behind you, on the left. Take your time.",pt:"Fica logo atrás de você, à esquerda. Sem pressa."},
+     {who:"b",en:"The medium fits perfectly! How much is it?",pt:"O médio serviu perfeitamente! Quanto custa?"},
+     {who:"a",en:"It's eighteen dinars, and it's on sale this week.",pt:"São dezoito dinares, e está em promoção esta semana."},
+     {who:"b",en:"Great, I'll take it. Thank you for your help!",pt:"Ótimo, vou levar. Obrigada pela ajuda!"}
+   ],
+   questions:[
+     {q:"O que a Giu está procurando?",options:["Shoes","A dress","A bag"],answer:1},
+     {q:"Que cor ela quer?",options:["Red or white","Dark blue or black","Green"],answer:1},
+     {q:"Qual tamanho serviu nela?",options:["Small","Medium","Large"],answer:1}
+   ]},
+  {id:"d_return",sceneId:"return",emoji:"🔁",title:"Trocar ou devolver",a:"Atendente",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi there, how can I help you today?",pt:"Oi, como posso te ajudar hoje?"},
+     {who:"b",en:"Hello. I'd like to return this shirt, please.",pt:"Olá. Eu gostaria de devolver esta camisa, por favor."},
+     {who:"a",en:"No problem. Is there something wrong with it?",pt:"Sem problema. Tem algo de errado com ela?"},
+     {who:"b",en:"It's a little too small. I think I need a bigger size.",pt:"Está um pouco pequena. Acho que preciso de um tamanho maior."},
+     {who:"a",en:"I understand. Do you have the receipt with you?",pt:"Entendo. Você está com o recibo?"},
+     {who:"b",en:"Yes, here it is. Can I exchange it instead of a refund?",pt:"Sim, aqui está. Posso trocar em vez de pegar o dinheiro de volta?"},
+     {who:"a",en:"Of course. We have the same shirt in large. Would you like that?",pt:"Claro. Temos a mesma camisa no tamanho grande. Você quer?"},
+     {who:"b",en:"Yes, perfect. Is it the same price?",pt:"Sim, perfeito. É o mesmo preço?"},
+     {who:"a",en:"It is, so there's nothing extra to pay.",pt:"É sim, então não há nada a mais para pagar."},
+     {who:"b",en:"Wonderful. Thank you for making it so easy.",pt:"Maravilha. Obrigada por facilitar tanto."},
+     {who:"a",en:"You're very welcome. Here's your new shirt and your receipt.",pt:"De nada. Aqui está sua camisa nova e o recibo."},
+     {who:"b",en:"Thank you. Have a great day!",pt:"Obrigada. Tenha um ótimo dia!"}
+   ],
+   questions:[
+     {q:"Por que a Giu quer devolver a camisa?",options:["It's too small","It's the wrong color","It's broken"],answer:0},
+     {q:"O que ela preferiu, em vez do dinheiro de volta?",options:["A refund","An exchange","A discount"],answer:1},
+     {q:"Ela teve que pagar a mais?",options:["Yes","No","Only a little"],answer:1}
+   ]},
+  {id:"d_sim",sceneId:"sim",emoji:"📱",title:"Comprar um chip de celular",a:"Vendedor",b:"Giu",
+   lines:[
+     {who:"a",en:"Welcome! How can I help you today?",pt:"Bem-vinda! Como posso ajudar hoje?"},
+     {who:"b",en:"Hi. I just arrived in Kuwait and I need a new SIM card.",pt:"Oi. Acabei de chegar no Kuwait e preciso de um chip novo."},
+     {who:"a",en:"Sure! Do you want a plan with calls and internet?",pt:"Claro! Você quer um plano com ligações e internet?"},
+     {who:"b",en:"Yes, mostly internet. I use a lot of data for video calls.",pt:"Sim, principalmente internet. Uso muitos dados para videochamadas."},
+     {who:"a",en:"In that case, our family plan gives you plenty of data each month.",pt:"Nesse caso, nosso plano família te dá bastante dados por mês."},
+     {who:"b",en:"How much does it cost per month?",pt:"Quanto custa por mês?"},
+     {who:"a",en:"It's ten dinars a month, and the SIM card itself is free today.",pt:"São dez dinares por mês, e o chip em si está de graça hoje."},
+     {who:"b",en:"That sounds good. Do I need my passport for this?",pt:"Parece bom. Eu preciso do passaporte para isso?"},
+     {who:"a",en:"Yes, please. I just need to scan it to register the number.",pt:"Sim, por favor. Só preciso escanear para registrar o número."},
+     {who:"b",en:"Here you go. Can you help me set it up in my phone?",pt:"Aqui está. Você pode me ajudar a configurar no meu telefone?"},
+     {who:"a",en:"Absolutely. Give me your phone and I'll do it now.",pt:"Com certeza. Me dá o telefone que eu faço agora."},
+     {who:"b",en:"Thank you so much. You've been very helpful.",pt:"Muito obrigada. Você ajudou demais."}
+   ],
+   questions:[
+     {q:"Para que a Giu usa muitos dados?",options:["Games","Video calls","Music"],answer:1},
+     {q:"Quanto custa o plano por mês?",options:["Five dinars","Ten dinars","Twenty dinars"],answer:1},
+     {q:"O que o vendedor precisou para registrar o número?",options:["Her passport","Her address","Her email"],answer:0}
+   ]},
+  {id:"d_salon",sceneId:"salon",emoji:"💇‍♀️",title:"No salão de cabeleireiro",a:"Cabeleireira",b:"Giu",
+   lines:[
+     {who:"a",en:"Hi! Welcome. Please have a seat. What would you like to do today?",pt:"Oi! Bem-vinda. Por favor, sente-se. O que gostaria de fazer hoje?"},
+     {who:"b",en:"Hello. I'd like a haircut, please. Just a trim.",pt:"Olá. Eu gostaria de um corte, por favor. Só aparar."},
+     {who:"a",en:"Of course. How much would you like me to take off?",pt:"Claro. Quanto você quer que eu tire?"},
+     {who:"b",en:"Just a little, maybe two centimeters. Not too short.",pt:"Só um pouco, talvez dois centímetros. Não muito curto."},
+     {who:"a",en:"Got it. Would you like me to wash it first?",pt:"Entendi. Quer que eu lave primeiro?"},
+     {who:"b",en:"Yes, please. How long will it take in total?",pt:"Sim, por favor. Quanto tempo leva no total?"},
+     {who:"a",en:"About thirty minutes with the wash. Are you in a hurry?",pt:"Uns trinta minutos com a lavagem. Você está com pressa?"},
+     {who:"b",en:"No, I have time. How much is the haircut?",pt:"Não, tenho tempo. Quanto custa o corte?"},
+     {who:"a",en:"It's eight dinars, and the wash is included.",pt:"São oito dinares, e a lavagem está inclusa."},
+     {who:"b",en:"Perfect. The water temperature is just right, thank you.",pt:"Perfeito. A temperatura da água está ótima, obrigada."},
+     {who:"a",en:"Great. All done! What do you think?",pt:"Ótimo. Prontinho! O que achou?"},
+     {who:"b",en:"I love it! It looks great. Thank you so much.",pt:"Adorei! Ficou ótimo. Muito obrigada."}
+   ],
+   questions:[
+     {q:"O que a Giu pediu?",options:["A color","A trim (haircut)","Just a wash"],answer:1},
+     {q:"Quanto tempo leva no total?",options:["About 30 minutes","About an hour","Ten minutes"],answer:0},
+     {q:"A lavagem está inclusa no preço?",options:["Yes","No","Only on weekends"],answer:0}
+   ]},
+  {id:"d_bank",sceneId:"bank",emoji:"💱",title:"Trocar dinheiro",a:"Atendente",b:"Giu",
+   lines:[
+     {who:"a",en:"Good morning! How can I help you?",pt:"Bom dia! Como posso ajudar?"},
+     {who:"b",en:"Good morning. I'd like to change some money, please.",pt:"Bom dia. Eu gostaria de trocar um dinheiro, por favor."},
+     {who:"a",en:"Sure. Which currency would you like to change?",pt:"Claro. Qual moeda você quer trocar?"},
+     {who:"b",en:"I have US dollars, and I'd like Kuwaiti dinars.",pt:"Tenho dólares americanos e gostaria de dinares kuwaitianos."},
+     {who:"a",en:"No problem. How much would you like to change?",pt:"Sem problema. Quanto você quer trocar?"},
+     {who:"b",en:"One hundred dollars. What's the rate today?",pt:"Cem dólares. Qual é a taxa hoje?"},
+     {who:"a",en:"The rate is good today. You'll get about thirty dinars.",pt:"A taxa está boa hoje. Você vai receber uns trinta dinares."},
+     {who:"b",en:"Is there any fee for the exchange?",pt:"Tem alguma taxa pela troca?"},
+     {who:"a",en:"No, there's no fee. Could I see your passport, please?",pt:"Não, não tem taxa. Posso ver seu passaporte, por favor?"},
+     {who:"b",en:"Of course, here it is.",pt:"Claro, aqui está."},
+     {who:"a",en:"Thank you. Here are your thirty dinars. Please count them.",pt:"Obrigado. Aqui estão seus trinta dinares. Por favor, confira."},
+     {who:"b",en:"It's all correct. Thank you very much!",pt:"Está tudo certo. Muito obrigada!"}
+   ],
+   questions:[
+     {q:"Qual moeda a Giu quer trocar?",options:["Euros","US dollars","Pounds"],answer:1},
+     {q:"Quanto ela vai receber em dinares?",options:["About 30","About 100","About 10"],answer:0},
+     {q:"Tem taxa pela troca?",options:["Yes","No","Only for big amounts"],answer:1}
+   ]},
+  {id:"d_bill",sceneId:"bill",emoji:"🧾",title:"Pedir a conta",a:"Garçom",b:"Giu",
+   lines:[
+     {who:"a",en:"How was everything? Did you enjoy your meal?",pt:"Estava tudo bem? Você gostou da refeição?"},
+     {who:"b",en:"It was delicious, thank you. Everything was wonderful.",pt:"Estava delicioso, obrigada. Estava tudo maravilhoso."},
+     {who:"a",en:"I'm so glad to hear that. Can I get you anything else?",pt:"Fico muito feliz em ouvir isso. Posso trazer mais alguma coisa?"},
+     {who:"b",en:"No, thank you. Could I have the bill, please?",pt:"Não, obrigada. Pode trazer a conta, por favor?"},
+     {who:"a",en:"Of course. Here it is. Take your time.",pt:"Claro. Aqui está. Sem pressa."},
+     {who:"b",en:"Thank you. Do you take card, or is it cash only?",pt:"Obrigada. Vocês aceitam cartão, ou é só dinheiro?"},
+     {who:"a",en:"We take both. Whatever is easier for you.",pt:"Aceitamos os dois. O que for mais fácil pra você."},
+     {who:"b",en:"I'll pay by card, then. Is the service charge included?",pt:"Então pago no cartão. A taxa de serviço está incluída?"},
+     {who:"a",en:"Yes, it's already included in the total.",pt:"Sim, já está incluída no total."},
+     {who:"b",en:"Perfect. Here's my card. Thank you for the lovely evening.",pt:"Perfeito. Aqui está meu cartão. Obrigada pela noite agradável."},
+     {who:"a",en:"Thank you! It was a pleasure. Please come again soon.",pt:"Obrigado! Foi um prazer. Por favor, volte logo."},
+     {who:"b",en:"We definitely will. Good night!",pt:"Com certeza vamos. Boa noite!"}
+   ],
+   questions:[
+     {q:"O que a Giu achou da comida?",options:["It was okay","It was delicious","It was cold"],answer:1},
+     {q:"Como ela vai pagar?",options:["By card","Cash only","By phone"],answer:0},
+     {q:"A taxa de serviço está incluída?",options:["Yes","No","She has to add it"],answer:0}
+   ]},
+  {id:"d_bakery",sceneId:"bakery",emoji:"🥐",title:"Na padaria",a:"Atendente",b:"Giu",
+   lines:[
+     {who:"a",en:"Good morning! What would you like today?",pt:"Bom dia! O que você gostaria hoje?"},
+     {who:"b",en:"Good morning. Everything smells so good! What's fresh?",pt:"Bom dia. Está tudo com um cheiro tão bom! O que está fresquinho?"},
+     {who:"a",en:"The croissants just came out of the oven, and the bread is warm too.",pt:"Os croissants acabaram de sair do forno, e o pão também está quentinho."},
+     {who:"b",en:"Lovely. I'll take two croissants, please.",pt:"Que delícia. Vou levar dois croissants, por favor."},
+     {who:"a",en:"Of course. Would you like anything sweet as well?",pt:"Claro. Você quer algo doce também?"},
+     {who:"b",en:"What's that cake over there?",pt:"O que é aquele bolo ali?"},
+     {who:"a",en:"That's a date cake, very popular here. Would you like a slice?",pt:"É um bolo de tâmara, muito popular aqui. Quer uma fatia?"},
+     {who:"b",en:"Yes, one slice please. And a loaf of bread.",pt:"Sim, uma fatia, por favor. E um pão de forma."},
+     {who:"a",en:"That's two croissants, one slice of date cake, and a loaf. Anything else?",pt:"Então são dois croissants, uma fatia de bolo de tâmara e um pão. Mais alguma coisa?"},
+     {who:"b",en:"That's everything. How much is it all?",pt:"É tudo. Quanto fica no total?"},
+     {who:"a",en:"That comes to two and a half dinars.",pt:"Dá dois dinares e meio."},
+     {who:"b",en:"Here you go. Thank you, it all looks delicious!",pt:"Aqui está. Obrigada, está tudo com uma cara deliciosa!"}
+   ],
+   questions:[
+     {q:"O que acabou de sair do forno?",options:["The cake","The croissants","The cookies"],answer:1},
+     {q:"Que bolo a atendente sugeriu?",options:["Chocolate cake","Date cake","Carrot cake"],answer:1},
+     {q:"Quanto ficou no total?",options:["Two and a half dinars","Five dinars","One dinar"],answer:0}
+   ]},
+  {id:"d_delivery",sceneId:"delivery",emoji:"📞",title:"Pedir delivery por telefone",a:"Atendente",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello, thank you for calling Pizza House. Can I take your order?",pt:"Alô, obrigado por ligar para a Pizza House. Posso anotar seu pedido?"},
+     {who:"b",en:"Hi, yes. I'd like to order, please. Is this for delivery?",pt:"Oi, sim. Eu gostaria de pedir, por favor. É para entrega?"},
+     {who:"a",en:"Yes, we deliver. What would you like to order?",pt:"Sim, entregamos. O que você gostaria de pedir?"},
+     {who:"b",en:"One large cheese pizza, please. And a bottle of water.",pt:"Uma pizza grande de queijo, por favor. E uma garrafa de água."},
+     {who:"a",en:"Would you like any sauce or extra toppings?",pt:"Você quer algum molho ou cobertura extra?"},
+     {who:"b",en:"No extra toppings, thank you. Just the cheese.",pt:"Sem coberturas extras, obrigada. Só o queijo."},
+     {who:"a",en:"Perfect. Can I have your address, please?",pt:"Perfeito. Pode me dar o seu endereço, por favor?"},
+     {who:"b",en:"Yes, it's Block four, building twelve, apartment one. Near the park.",pt:"Sim, é Bloco quatro, prédio doze, apartamento um. Perto do parque."},
+     {who:"a",en:"Got it. And a phone number in case the driver gets lost?",pt:"Anotado. E um telefone, caso o entregador se perca?"},
+     {who:"b",en:"Sure. How long will the delivery take?",pt:"Claro. Quanto tempo leva a entrega?"},
+     {who:"a",en:"About forty minutes. The total is four dinars.",pt:"Uns quarenta minutos. O total é quatro dinares."},
+     {who:"b",en:"Great, thank you so much!",pt:"Ótimo, muito obrigada!"}
+   ],
+   questions:[
+     {q:"O que a Giu pediu?",options:["A cheese pizza and water","A salad","Two pizzas"],answer:0},
+     {q:"Quanto tempo leva a entrega?",options:["About 20 minutes","About 40 minutes","About an hour"],answer:1},
+     {q:"Quanto é o total?",options:["Four dinars","Ten dinars","Two dinars"],answer:0}
+   ]},
+  {id:"d_careem",sceneId:"careem",emoji:"🚗",title:"Pedir um Careem",a:"Motorista",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! Are you Giu? I'm your Careem driver.",pt:"Olá! Você é a Giu? Sou seu motorista do Careem."},
+     {who:"b",en:"Yes, that's me. Hi! We're going to The Avenues, right?",pt:"Sim, sou eu. Oi! Vamos para o The Avenues, certo?"},
+     {who:"a",en:"That's right. Please, get in. Is the back seat okay for you?",pt:"Isso mesmo. Por favor, entre. O banco de trás está bom para você?"},
+     {who:"b",en:"Yes, perfect. How long is the trip, more or less?",pt:"Sim, perfeito. Quanto tempo é a viagem, mais ou menos?"},
+     {who:"a",en:"About twenty minutes today. The traffic is calm.",pt:"Uns vinte minutos hoje. O trânsito está tranquilo."},
+     {who:"b",en:"Great. Could you turn on the air conditioning, please?",pt:"Ótimo. Você pode ligar o ar-condicionado, por favor?"},
+     {who:"a",en:"Of course, I'll turn it up. Just tell me if it's too cold.",pt:"Claro, vou aumentar. Só me avisa se ficar frio demais."},
+     {who:"b",en:"Thank you. Oh, can we stop at the pharmacy on the way?",pt:"Obrigada. Ah, a gente pode parar na farmácia no caminho?"},
+     {who:"a",en:"Sure, no problem. I'll wait for you outside.",pt:"Claro, sem problema. Vou esperar você lá fora."},
+     {who:"b",en:"You're very kind. I'll only be a minute.",pt:"Você é muito gentil. Só vou demorar um minuto."},
+     {who:"a",en:"Take your time. We're not in a rush.",pt:"Sem pressa. Não estamos com pressa."},
+     {who:"b",en:"Thank you so much. Here is good, by the way!",pt:"Muito obrigada. A propósito, aqui está bom!"}
+   ],
+   questions:[
+     {q:"Aonde a Giu está indo?",options:["The Avenues","The airport","The hospital"],answer:0},
+     {q:"Como está o trânsito hoje?",options:["Very heavy","Calm","Terrible"],answer:1},
+     {q:"Onde ela pediu para parar no caminho?",options:["At the pharmacy","At the bank","At a café"],answer:0}
+   ]},
+  {id:"d_directions",sceneId:"directions",emoji:"🧭",title:"Pedir informação na rua",a:"Pessoa",b:"Giu",
+   lines:[
+     {who:"b",en:"Excuse me, can you help me, please?",pt:"Com licença, você pode me ajudar, por favor?"},
+     {who:"a",en:"Of course! What are you looking for?",pt:"Claro! O que você está procurando?"},
+     {who:"b",en:"I'm trying to find the pharmacy. Is it far from here?",pt:"Estou tentando achar a farmácia. É longe daqui?"},
+     {who:"a",en:"No, it's very close. Only about two minutes on foot.",pt:"Não, é bem perto. Só uns dois minutos a pé."},
+     {who:"b",en:"Oh, great. How do I get there?",pt:"Ah, ótimo. Como eu chego lá?"},
+     {who:"a",en:"Go straight down this street, then turn right at the bank.",pt:"Vá reto por esta rua, depois vire à direita no banco."},
+     {who:"b",en:"Straight, then right at the bank. And then?",pt:"Reto, depois à direita no banco. E depois?"},
+     {who:"a",en:"The pharmacy is on your left, next to a small coffee shop.",pt:"A farmácia fica à sua esquerda, do lado de uma cafeteria pequena."},
+     {who:"b",en:"Perfect. Is it open now, do you know?",pt:"Perfeito. Está aberta agora, você sabe?"},
+     {who:"a",en:"Yes, it should be open until late.",pt:"Sim, deve estar aberta até tarde."},
+     {who:"b",en:"Thank you so much for your help. You're very kind.",pt:"Muito obrigada pela ajuda. Você é muito gentil."},
+     {who:"a",en:"You're welcome! Have a nice day.",pt:"De nada! Tenha um bom dia."}
+   ],
+   questions:[
+     {q:"O que a Giu está procurando?",options:["The bank","The pharmacy","The school"],answer:1},
+     {q:"O que ela faz no banco?",options:["Turns left","Turns right","Goes inside"],answer:1},
+     {q:"A farmácia fica do lado de quê?",options:["A coffee shop","A park","A hospital"],answer:0}
+   ]},
+  {id:"d_mall",sceneId:"mall",emoji:"🏬",title:"Achar uma loja no shopping",a:"Informações",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! Welcome to The Avenues. How can I help you?",pt:"Olá! Bem-vinda ao The Avenues. Como posso ajudar?"},
+     {who:"b",en:"Hi. I'm looking for the Zara store. Where is it?",pt:"Oi. Estou procurando a loja da Zara. Onde fica?"},
+     {who:"a",en:"Zara is on the first floor, near the big fountain.",pt:"A Zara fica no primeiro andar, perto da fonte grande."},
+     {who:"b",en:"The first floor. Should I take the stairs or is there an escalator?",pt:"O primeiro andar. Eu pego a escada ou tem escada rolante?"},
+     {who:"a",en:"There's an escalator right behind you, to the left.",pt:"Tem uma escada rolante bem atrás de você, à esquerda."},
+     {who:"b",en:"Great. And where are the restrooms?",pt:"Ótimo. E onde ficam os banheiros?"},
+     {who:"a",en:"The restrooms are next to the food court, also on this floor.",pt:"Os banheiros ficam ao lado da praça de alimentação, também neste andar."},
+     {who:"b",en:"Perfect. Is there a pharmacy in the mall, by any chance?",pt:"Perfeito. Por acaso tem uma farmácia no shopping?"},
+     {who:"a",en:"Yes, there's one on the ground floor, near the main entrance.",pt:"Sim, tem uma no térreo, perto da entrada principal."},
+     {who:"b",en:"You've been so helpful. Thank you very much.",pt:"Você ajudou demais. Muito obrigada."},
+     {who:"a",en:"My pleasure. Enjoy your shopping!",pt:"O prazer é meu. Boas compras!"},
+     {who:"b",en:"Thank you, have a great day!",pt:"Obrigada, tenha um ótimo dia!"}
+   ],
+   questions:[
+     {q:"Em qual andar fica a Zara?",options:["Ground floor","First floor","Second floor"],answer:1},
+     {q:"Onde ficam os banheiros?",options:["Next to the food court","Near the entrance","On the second floor"],answer:0},
+     {q:"Onde fica a farmácia?",options:["On the first floor","On the ground floor","Next to Zara"],answer:1}
+   ]},
+  {id:"d_security",sceneId:"security",emoji:"🛎️",title:"Falar com o porteiro",a:"Hassan",b:"Giu",
+   lines:[
+     {who:"a",en:"Good morning! How can I help you today?",pt:"Bom dia! Como posso ajudar hoje?"},
+     {who:"b",en:"Good morning, Hassan. Is there a package for me?",pt:"Bom dia, Hassan. Tem alguma encomenda pra mim?"},
+     {who:"a",en:"Let me check. What's your apartment number?",pt:"Deixa eu ver. Qual é o número do seu apartamento?"},
+     {who:"b",en:"I'm in apartment twelve.",pt:"Sou do apartamento doze."},
+     {who:"a",en:"Yes! There's a box here for you. It arrived this morning.",pt:"Sim! Tem uma caixa aqui pra você. Chegou hoje de manhã."},
+     {who:"b",en:"Oh, wonderful. Thank you for keeping it safe.",pt:"Ah, que ótimo. Obrigada por guardar."},
+     {who:"a",en:"Of course, that's my job. Do you need help carrying it up?",pt:"Claro, é o meu trabalho. Precisa de ajuda para levar pra cima?"},
+     {who:"b",en:"No, it's light, I can manage. By the way, where is the parking?",pt:"Não, está leve, eu dou conta. A propósito, onde fica o estacionamento?"},
+     {who:"a",en:"The parking is downstairs, on level B1. Your spot is number twelve too.",pt:"O estacionamento fica embaixo, no nível B1. Sua vaga é a número doze também."},
+     {who:"b",en:"That's easy to remember! One more thing — a friend is coming later.",pt:"Fácil de lembrar! Mais uma coisa: uma amiga vem mais tarde."},
+     {who:"a",en:"No problem, just tell me her name and I'll let her in.",pt:"Sem problema, é só me dizer o nome dela e eu deixo entrar."},
+     {who:"b",en:"Her name is Sara. Thank you so much, Hassan!",pt:"O nome dela é Sara. Muito obrigada, Hassan!"}
+   ],
+   questions:[
+     {q:"O que a Giu foi buscar?",options:["A letter","A package","A key"],answer:1},
+     {q:"Em qual nível fica o estacionamento?",options:["B1","B2","Ground floor"],answer:0},
+     {q:"Quem vem visitar a Giu mais tarde?",options:["Layla","Sara","Nour"],answer:1}
+   ]},
+  {id:"d_homedelivery",sceneId:"homedelivery",emoji:"📦",title:"Receber uma entrega",a:"Entregador",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! I have a delivery. Is this apartment twelve?",pt:"Olá! Tenho uma entrega. É o apartamento doze?"},
+     {who:"b",en:"Yes, it is. Is it for Giu?",pt:"Sim, é. É para a Giu?"},
+     {who:"a",en:"Yes, that's the name on the box. Two packages today.",pt:"Sim, é o nome na caixa. Dois pacotes hoje."},
+     {who:"b",en:"Oh, two? I was only expecting one.",pt:"Ah, dois? Eu só estava esperando um."},
+     {who:"a",en:"Let me check... yes, both are for this address.",pt:"Deixa eu ver... sim, os dois são para este endereço."},
+     {who:"b",en:"Okay, great. Where do I sign?",pt:"Certo, ótimo. Onde eu assino?"},
+     {who:"a",en:"Right here on the screen, please. With your finger.",pt:"Aqui na tela, por favor. Com o dedo."},
+     {who:"b",en:"Done. Thank you. Are they heavy?",pt:"Pronto. Obrigada. Eles são pesados?"},
+     {who:"a",en:"One is a bit heavy. Would you like me to put them inside?",pt:"Um está um pouco pesado. Quer que eu coloque para dentro?"},
+     {who:"b",en:"That would be great, thank you. Just by the door is fine.",pt:"Seria ótimo, obrigada. Pode deixar perto da porta mesmo."},
+     {who:"a",en:"There you go. Have a lovely day!",pt:"Pronto. Tenha um ótimo dia!"},
+     {who:"b",en:"You too. Thank you so much!",pt:"Você também. Muito obrigada!"}
+   ],
+   questions:[
+     {q:"Quantos pacotes chegaram?",options:["One","Two","Three"],answer:1},
+     {q:"Como a Giu assinou?",options:["On paper","On the screen with her finger","She didn't sign"],answer:1},
+     {q:"O que o entregador ofereceu?",options:["To carry them inside","A discount","A receipt"],answer:0}
+   ]},
+  {id:"d_school",sceneId:"school",emoji:"🎒",title:"Falar com a professora",a:"Ms. Sarah",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello! You must be the new mom. I'm Ms. Sarah, the teacher.",pt:"Olá! Você deve ser a mãe nova. Sou a Ms. Sarah, a professora."},
+     {who:"b",en:"Hello, nice to meet you. I'm Giu, Lucas's mother.",pt:"Olá, prazer em conhecer. Sou a Giu, mãe do Lucas."},
+     {who:"a",en:"Lucas is such a sweet boy. He settled in really quickly.",pt:"O Lucas é um menino tão querido. Ele se adaptou bem rápido."},
+     {who:"b",en:"That's such a relief to hear. How is he doing in class?",pt:"Que alívio ouvir isso. Como ele está indo na aula?"},
+     {who:"a",en:"Very well. He's making friends and he loves story time.",pt:"Muito bem. Ele está fazendo amigos e adora a hora da história."},
+     {who:"b",en:"He talks about that at home! Does he need anything from us?",pt:"Ele fala disso em casa! Ele precisa de algo da nossa parte?"},
+     {who:"a",en:"Just a water bottle every day, and a small snack for the morning.",pt:"Só uma garrafinha de água todo dia, e um lanchinho para a manhã."},
+     {who:"b",en:"Of course, I'll prepare that. What time does class finish?",pt:"Claro, vou preparar. A que horas a aula termina?"},
+     {who:"a",en:"At one o'clock. You can pick him up at the main gate.",pt:"À uma hora. Você pode buscá-lo no portão principal."},
+     {who:"b",en:"Perfect. Is there anything I should know for next week?",pt:"Perfeito. Tem algo que eu deva saber para a próxima semana?"},
+     {who:"a",en:"Yes, on Thursday we have a small school trip. I'll send a note.",pt:"Sim, na quinta temos um passeio pequeno da escola. Vou mandar um bilhete."},
+     {who:"b",en:"Thank you so much, Ms. Sarah. See you tomorrow!",pt:"Muito obrigada, Ms. Sarah. Até amanhã!"}
+   ],
+   questions:[
+     {q:"Como o filho da Giu está na escola?",options:["He's struggling","He settled in quickly","He's very shy"],answer:1},
+     {q:"O que ele precisa levar todo dia?",options:["A book","A water bottle and a snack","A toy"],answer:1},
+     {q:"O que acontece na quinta-feira?",options:["A school trip","An exam","A holiday"],answer:0}
+   ]},
+  {id:"d_appointment",sceneId:"appointment",emoji:"🗓️",title:"Marcar uma consulta",a:"Recepção",b:"Giu",
+   lines:[
+     {who:"a",en:"Good morning, clinic reception. How can I help you?",pt:"Bom dia, recepção da clínica. Como posso ajudar?"},
+     {who:"b",en:"Good morning. I'd like to make an appointment, please.",pt:"Bom dia. Eu gostaria de marcar uma consulta, por favor."},
+     {who:"a",en:"Of course. Is it for you, and what is it for?",pt:"Claro. É para você, e é para quê?"},
+     {who:"b",en:"It's for me, just a general checkup.",pt:"É para mim, só um check-up geral."},
+     {who:"a",en:"Okay. Have you been to our clinic before?",pt:"Certo. Você já veio à nossa clínica antes?"},
+     {who:"b",en:"No, this would be my first time.",pt:"Não, seria a minha primeira vez."},
+     {who:"a",en:"No problem. Is Sunday morning good for you?",pt:"Sem problema. Domingo de manhã está bom pra você?"},
+     {who:"b",en:"Sunday works. What time do you have available?",pt:"Domingo funciona. Que horário você tem disponível?"},
+     {who:"a",en:"I have ten o'clock or eleven thirty.",pt:"Tenho às dez ou às onze e meia."},
+     {who:"b",en:"Ten o'clock is perfect. What's the doctor's name?",pt:"Dez horas é perfeito. Qual é o nome da médica?"},
+     {who:"a",en:"Doctor Amal. Please bring your civil ID and arrive ten minutes early.",pt:"Doutora Amal. Por favor, traga seu documento e chegue dez minutos antes."},
+     {who:"b",en:"I will. Thank you very much. Goodbye!",pt:"Vou trazer. Muito obrigada. Tchau!"}
+   ],
+   questions:[
+     {q:"Para que é a consulta?",options:["A checkup","A surgery","An emergency"],answer:0},
+     {q:"Que dia e horário ela marcou?",options:["Sunday at 10","Monday at 11:30","Sunday at 9"],answer:0},
+     {q:"O que ela deve levar?",options:["Her civil ID","Money","A friend"],answer:0}
+   ]},
+  {id:"d_doctor",sceneId:"doctor",emoji:"🤒",title:"No médico: dizer o que sente",a:"Dra. Amal",b:"Giu",
+   lines:[
+     {who:"a",en:"Hello, please come in and sit down. What's the problem today?",pt:"Olá, por favor entre e sente-se. Qual é o problema hoje?"},
+     {who:"b",en:"Hello, doctor. I don't feel well. I have a headache and a sore throat.",pt:"Olá, doutora. Não estou me sentindo bem. Estou com dor de cabeça e dor de garganta."},
+     {who:"a",en:"I'm sorry to hear that. How long have you felt this way?",pt:"Sinto muito por isso. Há quanto tempo você se sente assim?"},
+     {who:"b",en:"Since yesterday. I also feel very tired.",pt:"Desde ontem. Também me sinto muito cansada."},
+     {who:"a",en:"Do you have a fever? Have you measured your temperature?",pt:"Você está com febre? Mediu a temperatura?"},
+     {who:"b",en:"A little fever this morning, yes.",pt:"Um pouco de febre hoje de manhã, sim."},
+     {who:"a",en:"Okay. Let me check your throat. Please open your mouth and say 'ah'.",pt:"Certo. Deixa eu ver sua garganta. Por favor, abra a boca e diga 'ah'."},
+     {who:"b",en:"Ahh.",pt:"Ahh."},
+     {who:"a",en:"It's a little red, but don't worry. It's not serious.",pt:"Está um pouco vermelha, mas não se preocupe. Não é grave."},
+     {who:"b",en:"That's a relief. What should I do?",pt:"Que alívio. O que eu devo fazer?"},
+     {who:"a",en:"Rest, drink plenty of water, and take this medicine after meals.",pt:"Descanse, beba bastante água e tome este remédio após as refeições."},
+     {who:"b",en:"Thank you, doctor. I feel better already, just hearing that.",pt:"Obrigada, doutora. Já me sinto melhor, só de ouvir isso."},
+     {who:"a",en:"You'll be fine in a few days. Take care of yourself.",pt:"Você vai ficar bem em alguns dias. Cuide-se."}
+   ],
+   questions:[
+     {q:"O que a Giu está sentindo?",options:["A headache and sore throat","A stomachache","A backache"],answer:0},
+     {q:"Há quanto tempo ela se sente assim?",options:["Since yesterday","For a week","Since this morning"],answer:0},
+     {q:"O que a médica recomendou?",options:["Rest, water, and medicine","An operation","Nothing"],answer:0}
+   ]},
 ];
 
 /* ===== Estado ===== */
@@ -1037,7 +1446,7 @@ function speakWord(w){if(!("speechSynthesis" in window))return;speechSynthesis.c
 /* ===== LISTENING ===== */
 $("#openListen").onclick=renderListenList;
 $("#backL").onclick=()=>{speechSynthesis.cancel();show("home");};
-$("#backLP").onclick=()=>{speechSynthesis.cancel();if(shRec&&shRec.state!=="inactive")shRec.stop();renderListenList();};
+$("#backLP").onclick=()=>{lpStop();if(shRec&&shRec.state!=="inactive")shRec.stop();renderListenList();};
 function renderListenList(){
   show("listen"); const g=$("#listenList"); g.innerHTML="";
   DIALOGUES.forEach(d=>{
@@ -1046,32 +1455,56 @@ function renderListenList(){
     c.onclick=()=>openDialogue(d); g.appendChild(c);
   });
 }
-function speakLine(text){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=voice?voice.lang:"en-US";if(voice)u.voice=voice;u.rate=0.9;u.pitch=1.02;speechSynthesis.speak(u);}
-function playAllLines(lines,els){
-  if(!("speechSynthesis" in window))return; speechSynthesis.cancel(); let i=0;
-  (function next(){
-    els.forEach(e=>e.classList.remove("playing"));
-    if(i>=lines.length)return;
-    els[i].classList.add("playing"); els[i].scrollIntoView({block:"center",behavior:"smooth"});
-    const u=new SpeechSynthesisUtterance(lines[i].en); u.lang=voice?voice.lang:"en-US"; if(voice)u.voice=voice; u.rate=0.9; u.pitch=1.02;
-    u.onend=()=>{i++;setTimeout(next,350);}; speechSynthesis.speak(u);
-  })();
+/* ===== Player do diálogo: ouvir / pausar / continuar / parar / repetir ===== */
+let lpData=null, lpEls=[], lpIdx=0, lpState="idle", lpSeq=0;
+function lpHighlight(i){ lpEls.forEach(e=>e.classList.remove("playing")); if(lpEls[i]){lpEls[i].classList.add("playing");lpEls[i].scrollIntoView({block:"center",behavior:"smooth"});} }
+function updateLpBtns(){
+  const main=$("#playAll");
+  main.textContent = lpState==="playing"?"⏸ Pausar":(lpState==="paused"?"▶ Continuar":"▶ Ouvir o diálogo inteiro");
+  $("#stopAll").style.display = lpState==="idle"?"none":"";
+  $("#repeatLine").style.display = lpState==="idle"?"none":"";
 }
+function lpSpeakCurrent(){
+  if(!("speechSynthesis" in window)||!lpData)return;
+  if(lpIdx>=lpData.length){ lpStop(); return; }
+  lpHighlight(lpIdx);
+  lpSeq++; const mySeq=lpSeq;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lpData[lpIdx].en); u.lang=voice?voice.lang:"en-US"; if(voice)u.voice=voice; u.rate=0.9; u.pitch=1.02;
+  u.onend=()=>{ if(mySeq!==lpSeq||lpState!=="playing")return; lpIdx++; if(lpIdx<lpData.length){setTimeout(()=>{if(lpState==="playing")lpSpeakCurrent();},350);} else {lpStop();} };
+  speechSynthesis.speak(u);
+}
+function lpPlay(){ if(!lpData)return; lpState="playing"; updateLpBtns(); lpSpeakCurrent(); }
+function lpPause(){ lpState="paused"; lpSeq++; speechSynthesis.cancel(); updateLpBtns(); }
+function lpStop(){ lpState="idle"; lpSeq++; if("speechSynthesis" in window)speechSynthesis.cancel(); lpIdx=0; lpEls.forEach(e=>e.classList.remove("playing")); updateLpBtns(); }
+function lpRepeat(){ if(lpState==="idle")return; lpState="playing"; updateLpBtns(); lpSpeakCurrent(); }
+// tocar uma fala isolada: pausa o diálogo naquela fala (Continuar retoma dali)
+function speakLineDirect(text,idx){
+  lpSeq++; if(lpState==="playing")lpState="paused";
+  if(lpData && typeof idx==="number"){ lpIdx=idx; lpHighlight(idx); }
+  updateLpBtns();
+  if(!("speechSynthesis" in window))return; speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text); u.lang=voice?voice.lang:"en-US"; if(voice)u.voice=voice; u.rate=0.9; u.pitch=1.02; speechSynthesis.speak(u);
+}
+$("#playAll").onclick=()=>{ if(lpState==="playing")lpPause(); else lpPlay(); };
+$("#stopAll").onclick=lpStop;
+$("#repeatLine").onclick=lpRepeat;
 function openDialogue(d){
+  lpStop();
   show("listenplay"); $("#lpTitle").textContent=d.emoji+" "+d.title; $("#lpSub").textContent="ouça, leia e repita";
   const wrap=$("#lpLines"); wrap.innerHTML=""; const els=[];
-  d.lines.forEach(ln=>{
+  d.lines.forEach((ln,idx)=>{
     const speaker=ln.who==="a"?d.a:d.b;
     const el=document.createElement("div"); el.className="lline "+ln.who;
     el.innerHTML=`<div class="sp">${esc(speaker)}</div><div class="en">${esc(ln.en)}</div>
       <div class="lrow"><button class="mini lplay">🔊 ouvir</button><button class="mini ltr">🇧🇷 tradução</button><button class="mini lsh" style="color:var(--terra)">🎤 repetir</button></div>
       <div class="lpt">${esc(ln.pt)}</div>`;
-    el.querySelector(".lplay").onclick=()=>speakLine(ln.en);
+    el.querySelector(".lplay").onclick=()=>speakLineDirect(ln.en,idx);
     el.querySelector(".ltr").onclick=e=>{const p=el.querySelector(".lpt");p.classList.toggle("show");e.target.textContent=p.classList.contains("show")?"🇧🇷 ocultar":"🇧🇷 tradução";};
     el.querySelector(".lsh").onclick=e=>shadowToggle(e.target,ln.en,d.title);
     wrap.appendChild(el); els.push(el);
   });
-  $("#playAll").onclick=()=>playAllLines(d.lines,els);
+  lpData=d.lines; lpEls=els; lpIdx=0; lpState="idle"; updateLpBtns();
   renderQuiz(d);
 }
 function renderQuiz(d){
