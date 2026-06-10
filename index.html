@@ -151,8 +151,9 @@
   .lline .lpt.show{display:block}
   .lline .lrow{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
   .lline.playing{background:var(--teal-soft);border-color:var(--teal)}
-  .lpctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .lpctrl .recbtn{margin:14px 0 0}
+  #listenplay{padding-bottom:90px}
+  .lpctrl{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:20;display:flex;gap:8px;flex-wrap:nowrap;justify-content:center;width:calc(100% - 32px);max-width:648px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px;box-shadow:var(--shadow)}
+  .lpctrl .recbtn{margin:0;flex:1;justify-content:center;text-align:center;padding:11px 6px;font-size:13px}
   #stopAll{color:var(--terra-deep)} #repeatLine{color:var(--teal)}
   .quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
   .quiz .qh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--terra);margin-bottom:10px}
@@ -281,7 +282,7 @@
     <div class="topbar"><button class="back" id="backLP" aria-label="Voltar">←</button><div class="meta"><h2 id="lpTitle"></h2><span id="lpSub"></span></div></div>
     <div class="lpctrl">
       <button class="recbtn" id="playAll">▶ Ouvir o diálogo inteiro</button>
-      <button class="recbtn" id="repeatLine" style="display:none">🔁 Repetir a fala</button>
+      <button class="recbtn" id="repeatLine" style="display:none">🔁 Repetir</button>
       <button class="recbtn" id="stopAll" style="display:none">⏹ Parar</button>
     </div>
     <div id="lpLines" style="margin-top:12px"></div>
